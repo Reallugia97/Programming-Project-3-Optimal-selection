@@ -12,7 +12,6 @@
    ```cmd
    git clone https://github.com/Reallugia97/Programming-Project-3-Optimal-selection.git
    ```
-2. **Enter username and password**
 
 ## Running the Application
 
