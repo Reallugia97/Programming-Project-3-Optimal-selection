@@ -1,6 +1,6 @@
 # **CS 2430 — Project 3 Plan**
 
-**Reminder\*** Update at least twice per project; for each “Done” task, include an evidence pointer.
+**Reminder\:** Update at least twice per project; for each “Done” task, include an evidence pointer.
 
 ## **1\) Project Information**
 
