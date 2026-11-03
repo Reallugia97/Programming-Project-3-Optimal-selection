@@ -20,4 +20,9 @@ public class Experiment {
 		this.weight = weight;
 		this.rating = rating;
 	}
+	
+	double ratio() {
+		return (double) rating / weight;
+	}
+	
 }
