@@ -17,9 +17,9 @@
 
 | Team Member | Role  | Primary Responsibilities  | Availability / Notes |
 | :---- | :---- | :---- | :---- |
-|  | Implementation Lead | Owns core algorithm implementation; integrates modules; maintains main branch health. |  |
-|  | Verification Lead | Creates test plan; edge cases; validates outputs; documents verification evidence. |  |
-|  | Communications Lead | Assembles report/video; ensures run instructions; tracks deliverables; merges documentation. |  |
+| (Shared) | Implementation Lead | Owns core algorithm implementation; integrates modules; maintains main branch health. |  |
+| Nathan Johnson | Verification Lead | Creates test plan; edge cases; validates outputs; documents verification evidence. |  |
+| Brayden ﻿Bigelow | Communications Lead | Assembles report/video; ensures run instructions; tracks deliverables; merges documentation. |  |
 
 ## 
 
