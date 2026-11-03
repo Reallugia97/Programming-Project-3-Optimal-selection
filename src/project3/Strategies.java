@@ -52,7 +52,7 @@ public class Strategies {
 		return greedy(Comparator.comparingInt((Experiment e) -> e.weight).thenComparing(Comparator.comparingInt((Experiment e) -> e.rating).reversed()), maxWeight);
 	}
 	
-	static Payload ratioFirst(int maxWeight) {
+	static Payload highestRatioFirst(int maxWeight) {
 		return greedy(Comparator.comparingDouble(Experiment::ratio).reversed().thenComparing(e -> e.weight), 700);
 	}
 		
