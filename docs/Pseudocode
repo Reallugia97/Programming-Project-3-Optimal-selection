@@ -1,0 +1,54 @@
+- Greedy Strategies
+	- Basic Structure:
+	- Sort the elements by  _
+	- Add items from the start of the sorted list that haven't been added yet that don't exceed the weight limit until there are no more items that can be added.
+	-
+	- **Highest Rating First** (int maxWeight)
+		- Sort elements by Rating (greatest to least)
+		- for each element
+			- if(payload.weight + item.weight <= maxWeight)
+				- call 'add item to payload' method
+					- this should also add item weight to payload
+		- return Payload
+	-
+	- **Lightest First**  (int maxWeight)
+		- Sort elements by weight (least to greatest)
+		- for each element
+			- if(payload.weight + item.weight <= maxWeight)
+				- call 'add item to payload' method
+					- this should also add item weight to payload
+		- return Payload
+	-
+	- **Best Rating-to-Weight Ratio First**  (int maxWeight)
+		- Sort elements by weight (least to greatest)
+		- for each element
+			- if(payload.weight + item.weight <= maxWeight)
+				- call 'add item to payload' method
+					- this should also add item weight to payload
+		- return Payload
+	-
+	-
+- Exhaustive Search
+	- (Assuming we don't use code from elsewhere):
+	-
+	- create a boolean array *combination* that represents which elements are in (true) and out (false)
+	- each element is initialized to false
+	- create an array of Payload objects
+	- create an integer variable with value 0;
+	-
+	- Loop (until i = 4096)
+		- Iterate across the array called *combination*:
+			- Calculate the payload with the items corresponding to the true positions in the array
+			- As each item is added to payload it automatically increments the total weight and total rating
+		-
+		- increment i
+		- update combination in synch with value of i:
+			- find the element of the array called *combination* that is zero that is the farthest to the right
+			- set it to 1
+			- set all elements to the right of that element to 0
+	-
+	- Loop across all the generated possibilities
+	- Print the top 3 (in terms of total rating).
+	- Print the optimal one.
+- Dynamic Programming
+	-
