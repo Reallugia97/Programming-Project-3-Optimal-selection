@@ -29,6 +29,8 @@ public class Strategies {
 		return payload;
 	}
 	
+	//comparingInt sorts ascending order, so for highest first it has to be reversed after
+	//thenComparing is for breaking ties using weight
 	static Payload highestRatingFirst(int maxWeight, List<Experiment> experiments) {
 		return greedy(Comparator.comparingInt((Experiment e) -> e.rating).reversed().thenComparing(e -> e.weight), maxWeight, experiments);
 	}
