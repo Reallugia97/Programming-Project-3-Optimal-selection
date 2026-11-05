@@ -16,8 +16,11 @@ class StrategiesTests {
 //		fail("Not yet implemented");
 	}
 
-	Strategies s = new Strategies(List.of(new Experiment("foo", 3, 1), new Experiment("bar", 4, 2),
-			new Experiment("baz", 5, 3), new Experiment("bass", 10, 4)));
+	Strategies s = new Strategies(List.of(
+			new Experiment("foo", 3, 1),
+			new Experiment("bar", 4, 2),
+			new Experiment("baz", 5, 3),
+			new Experiment("bass", 10, 4)));
 
 	@Test
 	void testHighestRatingStrat() {
