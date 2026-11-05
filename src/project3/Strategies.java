@@ -15,23 +15,8 @@ import java.util.List;
  */
 public class Strategies {
 	
-	static final List<Experiment> EXPERIMENTS = List.of(
-			new Experiment("Cloud Patterns", 36, 5),
-			new Experiment("Solar Flares", 264, 9),
-			new Experiment("Solar Power", 188, 6),
-			new Experiment("Binary Stars", 203, 8),
-			new Experiment("Relativity", 104, 8),
-			new Experiment("Seed Viablity", 7, 4),
-			new Experiment("Sun Spots", 90, 2),
-			new Experiment("Mice Tumors", 65, 8),
-			new Experiment("Microgravity Plant Growth", 75, 5),
-			new Experiment("Micrometeorites", 170, 9),
-			new Experiment("Cosmic Rays", 80, 7),
-			new Experiment("Yeast Fermentation", 27, 4)
-			);
-
-	static Payload greedy(Comparator<Experiment> order, int maxWeight) {
-		List<Experiment> sorted = new ArrayList<>(EXPERIMENTS);
+	static Payload greedy(Comparator<Experiment> order, int maxWeight, List<Experiment> experiments) {
+		List<Experiment> sorted = new ArrayList<>(experiments);
 		sorted.sort(order);
 		
 		Payload payload = new Payload();
@@ -44,20 +29,41 @@ public class Strategies {
 		return payload;
 	}
 	
-	static Payload highestRatingFirst(int maxWeight) {
-		return greedy(Comparator.comparingInt((Experiment e) -> e.rating).reversed().thenComparing(e -> e.weight), maxWeight);
+	static Payload highestRatingFirst(int maxWeight, List<Experiment> experiments) {
+		return greedy(Comparator.comparingInt((Experiment e) -> e.rating).reversed().thenComparing(e -> e.weight), maxWeight, experiments);
 	}
 	
-	static Payload lightestFirst(int maxWeight) {
-		return greedy(Comparator.comparingInt((Experiment e) -> e.weight).thenComparing(Comparator.comparingInt((Experiment e) -> e.rating).reversed()), maxWeight);
+	static Payload lightestFirst(int maxWeight, List<Experiment> experiments) {
+		return greedy(Comparator.comparingInt((Experiment e) -> e.weight).thenComparing(Comparator.comparingInt((Experiment e) -> e.rating).reversed()), maxWeight, experiments);
 	}
 	
-	static Payload highestRatioFirst(int maxWeight) {
-		return greedy(Comparator.comparingDouble(Experiment::ratio).reversed().thenComparing(e -> e.weight), 700);
+	static Payload highestRatioFirst(int maxWeight, List<Experiment> experiments) {
+		return greedy(Comparator.comparingDouble(Experiment::ratio).reversed().thenComparing(e -> e.weight), maxWeight, experiments);
 	}
+	
+	
+	static void bruteForce(int maxWeight, List<Experiment> experiments) {
 		
+	}
+	
+	
 	public static void main(String[] args) {
+		List<Experiment> experiments = List.of(
+				new Experiment("Cloud Patterns", 36, 5),
+				new Experiment("Solar Flares", 264, 9),
+				new Experiment("Solar Power", 188, 6),
+				new Experiment("Binary Stars", 203, 8),
+				new Experiment("Relativity", 104, 8),
+				new Experiment("Seed Viablity", 7, 4),
+				new Experiment("Sun Spots", 90, 2),
+				new Experiment("Mice Tumors", 65, 8),
+				new Experiment("Microgravity Plant Growth", 75, 5),
+				new Experiment("Micrometeorites", 170, 9),
+				new Experiment("Cosmic Rays", 80, 7),
+				new Experiment("Yeast Fermentation", 27, 4)
+				);
 		
+		System.out.println(highestRatingFirst(700, experiments));
 	}
 	
 }
