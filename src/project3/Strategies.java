@@ -15,6 +15,22 @@ import java.util.List;
  */
 public class Strategies {
 	
+	private static List<Experiment> experiments;
+	
+	Strategies()
+	{
+	}
+	
+	Strategies(List<Experiment> experiments)
+	{
+		this.experiments = experiments;
+	}
+	
+	public static List<Experiment> getExperiments()
+	{
+		return experiments;
+	}
+	
 	static Payload greedy(Comparator<Experiment> order, int maxWeight, List<Experiment> experiments) {
 		List<Experiment> sorted = new ArrayList<>(experiments);
 		sorted.sort(order);
@@ -31,15 +47,18 @@ public class Strategies {
 	
 	//comparingInt sorts ascending order, so for highest first it has to be reversed after
 	//thenComparing is for breaking ties using weight
-	static Payload highestRatingFirst(int maxWeight, List<Experiment> experiments) {
+//	static Payload highestRatingFirst(int maxWeight, List<Experiment> experiments) {
+	static Payload highestRatingFirst(int maxWeight) {		
 		return greedy(Comparator.comparingInt((Experiment e) -> e.rating).reversed().thenComparing(e -> e.weight), maxWeight, experiments);
 	}
 	
-	static Payload lightestFirst(int maxWeight, List<Experiment> experiments) {
+//	static Payload lightestFirst(int maxWeight, List<Experiment> experiments) {
+	static Payload lightestFirst(int maxWeight) {
 		return greedy(Comparator.comparingInt((Experiment e) -> e.weight).thenComparing(Comparator.comparingInt((Experiment e) -> e.rating).reversed()), maxWeight, experiments);
 	}
 	
-	static Payload highestRatioFirst(int maxWeight, List<Experiment> experiments) {
+//	static Payload highestRatioFirst(int maxWeight, List<Experiment> experiments) {
+	static Payload highestRatioFirst(int maxWeight) {
 		return greedy(Comparator.comparingDouble(Experiment::ratio).reversed().thenComparing(e -> e.weight), maxWeight, experiments);
 	}
 	
@@ -50,22 +69,52 @@ public class Strategies {
 	
 	
 	public static void main(String[] args) {
-		List<Experiment> experiments = List.of(
-				new Experiment("Cloud Patterns", 36, 5),
-				new Experiment("Solar Flares", 264, 9),
-				new Experiment("Solar Power", 188, 6),
-				new Experiment("Binary Stars", 203, 8),
-				new Experiment("Relativity", 104, 8),
-				new Experiment("Seed Viablity", 7, 4),
-				new Experiment("Sun Spots", 90, 2),
-				new Experiment("Mice Tumors", 65, 8),
-				new Experiment("Microgravity Plant Growth", 75, 5),
-				new Experiment("Micrometeorites", 170, 9),
-				new Experiment("Cosmic Rays", 80, 7),
-				new Experiment("Yeast Fermentation", 27, 4)
-				);
 		
-		System.out.println(highestRatingFirst(700, experiments));
+		Strategies s = new Strategies(
+				List.of(
+						new Experiment("Cloud Patterns", 36, 5),
+						new Experiment("Solar Flares", 264, 9),
+						new Experiment("Solar Power", 188, 6),
+						new Experiment("Binary Stars", 203, 8),
+						new Experiment("Relativity", 104, 8),
+						new Experiment("Seed Viablity", 7, 4),
+						new Experiment("Sun Spots", 90, 2),
+						new Experiment("Mice Tumors", 65, 8),
+						new Experiment("Microgravity Plant Growth", 75, 5),
+						new Experiment("Micrometeorites", 170, 9),
+						new Experiment("Cosmic Rays", 80, 7),
+						new Experiment("Yeast Fermentation", 27, 4)
+				));
+		
+//		List<Experiment> experiments = List.of(
+//				new Experiment("Cloud Patterns", 36, 5),
+//				new Experiment("Solar Flares", 264, 9),
+//				new Experiment("Solar Power", 188, 6),
+//				new Experiment("Binary Stars", 203, 8),
+//				new Experiment("Relativity", 104, 8),
+//				new Experiment("Seed Viablity", 7, 4),
+//				new Experiment("Sun Spots", 90, 2),
+//				new Experiment("Mice Tumors", 65, 8),
+//				new Experiment("Microgravity Plant Growth", 75, 5),
+//				new Experiment("Micrometeorites", 170, 9),
+//				new Experiment("Cosmic Rays", 80, 7),
+//				new Experiment("Yeast Fermentation", 27, 4)
+//				);
+		
+//		System.out.println(highestRatingFirst(700, experiments));
+		Payload p = highestRatingFirst(700);
+		System.out.println(p);
+		System.out.println(p.items);
+		
+		for(int i = 0; i<p.items.size(); i++)
+		{
+			System.out.println(p.items.get(i));
+		}
+		
+		for(int i = 0; i<p.items.size(); i++)
+		{
+			System.out.println(p.items.get(i).name);
+		}
 	}
 	
 }
