@@ -17,17 +17,15 @@ public class Strategies {
 	
 	private static List<Experiment> experiments;
 	
-	Strategies()
-	{
+	Strategies() {
+		
 	}
 	
-	Strategies(List<Experiment> experiments)
-	{
-		this.experiments = experiments;
+	Strategies(List<Experiment> experiments) {
+		Strategies.experiments = experiments;
 	}
 	
-	public static List<Experiment> getExperiments()
-	{
+	public static List<Experiment> getExperiments()	{
 		return experiments;
 	}
 	
@@ -47,29 +45,72 @@ public class Strategies {
 	
 	//comparingInt sorts ascending order, so for highest first it has to be reversed after
 	//thenComparing is for breaking ties using weight
-//	static Payload highestRatingFirst(int maxWeight, List<Experiment> experiments) {
 	static Payload highestRatingFirst(int maxWeight) {		
-		return greedy(Comparator.comparingInt((Experiment e) -> e.rating).reversed().thenComparing(e -> e.weight), maxWeight, experiments);
+		return greedy(Comparator.comparingInt((Experiment e) -> e.rating).reversed().thenComparingInt(e -> e.weight), maxWeight, experiments);
 	}
 	
-//	static Payload lightestFirst(int maxWeight, List<Experiment> experiments) {
 	static Payload lightestFirst(int maxWeight) {
 		return greedy(Comparator.comparingInt((Experiment e) -> e.weight).thenComparing(Comparator.comparingInt((Experiment e) -> e.rating).reversed()), maxWeight, experiments);
 	}
 	
-//	static Payload highestRatioFirst(int maxWeight, List<Experiment> experiments) {
 	static Payload highestRatioFirst(int maxWeight) {
-		return greedy(Comparator.comparingDouble(Experiment::ratio).reversed().thenComparing(e -> e.weight), maxWeight, experiments);
+		return greedy(Comparator.comparingDouble(Experiment::ratio).reversed().thenComparingInt(e -> e.weight), maxWeight, experiments);
 	}
 	
-	
-	static void bruteForce(int maxWeight, List<Experiment> experiments) {
+	/**
+	 * Searches all 2^n possible payloads and returns a list of all payloads the do
+	 * not exceed maxWeight
+	 */
+	static List<Payload> bruteForce(int maxWeight) {
+		int n = experiments.size();
+		int totalPayloads = 1 << n;
+		List<Payload> valid = new ArrayList<>();
+		
+		// Buids every combination of n bits
+		for (int mask = 0; mask < totalPayloads; mask++) {
+			Payload p = new Payload();
+			
+			// Builds the payload for the current bit combination
+			for (int bit = 0; bit < n; bit++) {
+				if ((mask & (1 << bit)) != 0) {
+					p.add(experiments.get(bit));
+				}
+			}
+			
+			// Adds payload to list of valid payloads if its within maxWeight
+			if (p.totalWeight <= maxWeight) {
+				valid.add(p);
+			}
+		}
+		return valid;
 		
 	}
 	
+	static void printPayload(Payload p) {
+		printDashes(45);
+		System.out.printf("%-25s %5s %8s%n%n", "Experiment", "Weight", "Rating");
+		for (Experiment e : p.items) {
+			System.out.printf("%-25s %5d %8d%n", e.name, e.weight, e.rating);
+		}
+		printDashes(45);
+		System.out.printf("Total weight: %d%nTotal Rating: %d%n%n", p.totalWeight, p.totalRating);
+	}
+	
+	static void printTopThree(List<Payload> payload) {
+		List<Payload> sorted = new ArrayList<>(payload);
+		sorted.sort(Comparator.comparingInt((Payload p) -> p.totalRating).reversed().thenComparingInt(p -> p.totalWeight));
+		for(int i = 0; i < Math.min(3, sorted.size()); i++) {
+				printDashes(45);
+				System.out.printf("Brute Force #%d Solution: %n%n", (i + 1));
+				printPayload(sorted.get(i));
+		}
+	}
+	
+	static void printDashes(int length) {
+		System.out.println("-".repeat(length));
+	}
 	
 	public static void main(String[] args) {
-		
 		Strategies s = new Strategies(
 				List.of(
 						new Experiment("Cloud Patterns", 36, 5),
@@ -85,36 +126,26 @@ public class Strategies {
 						new Experiment("Cosmic Rays", 80, 7),
 						new Experiment("Yeast Fermentation", 27, 4)
 				));
+		int limit = 700;
 		
-//		List<Experiment> experiments = List.of(
-//				new Experiment("Cloud Patterns", 36, 5),
-//				new Experiment("Solar Flares", 264, 9),
-//				new Experiment("Solar Power", 188, 6),
-//				new Experiment("Binary Stars", 203, 8),
-//				new Experiment("Relativity", 104, 8),
-//				new Experiment("Seed Viablity", 7, 4),
-//				new Experiment("Sun Spots", 90, 2),
-//				new Experiment("Mice Tumors", 65, 8),
-//				new Experiment("Microgravity Plant Growth", 75, 5),
-//				new Experiment("Micrometeorites", 170, 9),
-//				new Experiment("Cosmic Rays", 80, 7),
-//				new Experiment("Yeast Fermentation", 27, 4)
-//				);
+		System.out.println("Greedy Strategies: \n");
 		
-//		System.out.println(highestRatingFirst(700, experiments));
-		Payload p = highestRatingFirst(700);
-		System.out.println(p);
-		System.out.println(p.items);
+		printDashes(45);
+		System.out.println("Highest Rating First: \n");
+		Payload rating = highestRatingFirst(limit);
+		printPayload(rating);
 		
-		for(int i = 0; i<p.items.size(); i++)
-		{
-			System.out.println(p.items.get(i));
-		}
+		printDashes(45);
+		System.out.println("Lowest Weight First: \n");
+		Payload weight = lightestFirst(limit);
+		printPayload(weight);
 		
-		for(int i = 0; i<p.items.size(); i++)
-		{
-			System.out.println(p.items.get(i).name);
-		}
+		printDashes(45);
+		System.out.println("Best Ratio First: \n");
+		Payload ratio = highestRatioFirst(limit);
+		printPayload(ratio);
+		
+		System.out.println("\nBrute Force Strategy: \n");
+		printTopThree(bruteForce(limit));
 	}
-	
 }
