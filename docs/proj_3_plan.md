@@ -53,7 +53,7 @@
 | ID | Task | Owner | Due Date | Status (NS/IP/D) | Evidence Link / Pointer | Notes / Dependencies |
 | :---- | :---- | :---- | :---- | :---- | :---- | :---- |
 | 1 | Create repository \+ baseline README/run steps |  |  |  |  |  |
-| 2 | Draft pseudocode for core algorithm in /docs |  |  |  |  |  |
+| 2 | Draft pseudocode for core algorithm in /docs | Nathan | Checkpoint | Done | [Commit](https://github.com/Reallugia97/Programming-Project-3-Optimal-selection/commit/077bf22c9076f3f13e20a9c2a261262a5617bd1f) |  |
 | 3 | Draft UML/module diagram in /docs | Team |  |  |  |  |
 | 4 | Implement core data structures and parsing |  |  |  |  |  |
 | 5 | Define verification plan (tests \+ edge cases) |  |  |  |  |  |
