@@ -50,5 +50,53 @@
 	- Loop across all the generated possibilities
 	- Print the top 3 (in terms of total rating).
 	- Print the optimal one.
-- Dynamic Programming
 	-
+- Dynamic Programming
+  - //Basically Dynamic Programming is breaking the problem down into smaller pieces with the same structure. There are two ways to do this for the knapsack problem: the amount of weight, and the number of items that can be included (once).
+  - //This pseudocode is written for a zero-indexed language.
+  - 
+  - //experiments holds a hard coded list of all experiments SORTED by weight
+  - 
+  - Create a 2D array (of Payloads) called dynamic
+  	- 13 rows //1 for every object + 1 for 0
+   	- 700 columns + 1 //1 for every kg and +1 for 0
+  - 
+  - Create payloadZero. Don't add anything to it.
+  - Loop through every cell in row 0
+  	- Fill it with payloadZero.
+  - Loop through every cell in column 0
+  	- Fill it with payloadZero.
+  - .
+  - Create payloadOne with the first item from experiments.
+  - Get the weight for this item, w.
+  - Fill in cells *0* through *w-1* of every row (after 0) with payloadZero.
+  - Fill in cell *w* of every row (after 0) with payloadOne.
+  - Fill in cells *w+1* through *700* of *row 1* with payloadOne.
+  - 
+  - Loop through rows *r* (2 through 12) top to bottom
+  	- Create a list of payloads *p*. Add item *r* to the first.
+  	- Create an integer variable *i*. Set it equal to the index of the first item of *p*.
+  	- Create an integer variable *n*. Set it equal to 0.
+  	- 
+  	- Loop through cells *w+1* through *700* of current row (using the variable weight) left to right
+	  	- //Base case:
+	  	- If the payload to the left has all items *1* through *r*, we copy the payload from the left into the current cell.
+	  	- Otherwise:
+	  		- If the weight of item *p_i* is greater than *weight*, add the payload with the highest rating (of the cell to the left, or the cell above) with the highest rating. On a tie use left.
+	  	- 
+	  		- If the weight of item *p_i* is equal to weight, check which of the 3 has the highest rating - *p_i*, left cell, cell above - and set the current cell equal to it.
+	  		- Call method newCombinations.
+	  	- 
+	  	- If the weight of item *p_i* is less than weight, then:
+	  		- If *p_i+1* == weight.
+	  			- If yes, increment i.
+	  			- check which of the 3 has the highest rating - *p_i*, left cell, cell above - and set the current cell equal to it.
+	  			- Call method newCombinations.
+	  		- Else
+	  			- check which of the 3 has the highest rating - *p_i*, left cell, cell above - and set dynamic[r][weight] equal to it.
+	  	- 
+	  - method newCombinations:
+		- Increment *n* by 1.
+	 	- Calculate new combinations (that *p* does not include) which include *r* and up to *n* other items.
+ 		- Sort these combinations by weight then rating. If a new combo *a* has higher rating than *b* AND *a*'s weight <= *b*'s weight then delete *b*.
+ 		- Add new combinations that remain to *p*.
