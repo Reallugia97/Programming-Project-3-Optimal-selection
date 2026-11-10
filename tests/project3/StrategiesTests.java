@@ -78,6 +78,16 @@ class StrategiesTests {
 	}
 	
 	/*
+	 combinedSavings1  = new ArrayList<>(List.of(
+				new Experiment("Seed Viability", 7, 4),
+				new Experiment("Yeast Fermentation", 27, 4)));
+		savings1 = 7;
+		preReqConstraint1  = new ArrayList<>(List.of(
+				new Experiment("Cosmic Rays (Primary Band)", 80, 7), 
+				new Experiment("Cosmic Rays (Secondary Band)", 10, 5)));
+	 */
+	
+	/*
 	 List.of(
 						new Experiment("Cloud Patterns", 36, 5),
 						new Experiment("Solar Flares", 264, 9),

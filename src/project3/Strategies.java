@@ -17,10 +17,10 @@ public class Strategies {
 	
 	private static List<Experiment> experiments;
 	
-	private static List<String> exclusiveConstraint1  = new ArrayList<>();
-	private static List<String> combinedSavings1  = new ArrayList<>();
+	private static ArrayList<Experiment> exclusiveConstraint1  = new ArrayList<>();
+	private static ArrayList<Experiment> combinedSavings1  = new ArrayList<>();
 	private static int savings1;
-	private static List<String> preReqConstraint1  = new ArrayList<>();
+	private static ArrayList<Experiment> preReqConstraint1  = new ArrayList<>();
 	
 	Strategies() {
 		
@@ -138,10 +138,17 @@ public class Strategies {
 		int limit = 700;
 		
 //		List<String> exclusiveConstraint  = new ArrayList<>(List.of("Solar Flares", "Solar Power", "Sun Spots"));
-		exclusiveConstraint1  = new ArrayList<>(List.of("Solar Flares", "Solar Power", "Sun Spots"));
-		combinedSavings1  = new ArrayList<>(List.of("Seed Viability", "Yeast Fermentation"));
+		ArrayList<Experiment> exclusiveConstraint1 = new ArrayList<>(List.of(
+				new Experiment("Solar Flares", 264, 9), 
+				new Experiment("Solar Power", 188, 6), 
+				new Experiment("Sun Spots", 90, 2)));
+		combinedSavings1  = new ArrayList<>(List.of(
+				new Experiment("Seed Viability", 7, 4),
+				new Experiment("Yeast Fermentation", 27, 4)));
 		savings1 = 7;
-		preReqConstraint1  = new ArrayList<>(List.of("Cosmic Rays (Primary Band)", "Cosmic Rays (Secondary Band)"));
+		preReqConstraint1  = new ArrayList<>(List.of(
+				new Experiment("Cosmic Rays (Primary Band)", 80, 7), 
+				new Experiment("Cosmic Rays (Secondary Band)", 10, 5)));
 		
 		
 		

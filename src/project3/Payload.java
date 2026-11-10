@@ -20,9 +20,9 @@ public class Payload {
 	boolean validPayload = true;
 	
 	List<Experiment> exclusiveConstraint  = new ArrayList<>();
-	List<String> combinedSavings  = new ArrayList<>();
+	List<Experiment> combinedSavings  = new ArrayList<>();
 	int savings;
-	List<String> preReqConstraint  = new ArrayList<>();
+	List<Experiment> preReqConstraint  = new ArrayList<>();
 	
 	void add(Experiment e) {
 		items.add(e);
@@ -35,8 +35,8 @@ public class Payload {
 	// if payload includes items.name.equals Cosmic Rays (Secondary Band) && !Cosmic Rays (Primary Band), reject
 	
 	public void addConstraints(List<Experiment> exclusiveConstraint1,
-			List<String> combinedSavings1, int savings1,
-			List<String> preReqConstraint1) {
+			List<Experiment> combinedSavings1, int savings1,
+			List<Experiment> preReqConstraint1) {
 		exclusiveConstraint = exclusiveConstraint1;
 		combinedSavings = combinedSavings1;
 		savings = savings1;
