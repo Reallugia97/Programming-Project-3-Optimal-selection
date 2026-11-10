@@ -36,6 +36,8 @@ public class Strategies {
 		Payload payload = new Payload();
 		
 		for (Experiment e : sorted) {
+			// Check payload change request requirements here
+			
 			if (payload.totalWeight + e.weight <= maxWeight) {
 				payload.add(e);
 			}
@@ -78,6 +80,7 @@ public class Strategies {
 			}
 			
 			// Adds payload to list of valid payloads if its within maxWeight
+			// Check payload change request requirements here
 			if (p.totalWeight <= maxWeight) {
 				valid.add(p);
 			}
@@ -118,7 +121,7 @@ public class Strategies {
 						new Experiment("Solar Power", 188, 6),
 						new Experiment("Binary Stars", 203, 8),
 						new Experiment("Relativity", 104, 8),
-						new Experiment("Seed Viablity", 7, 4),
+						new Experiment("Seed Viability", 7, 4),
 						new Experiment("Sun Spots", 90, 2),
 						new Experiment("Mice Tumors", 65, 8),
 						new Experiment("Microgravity Plant Growth", 75, 5),

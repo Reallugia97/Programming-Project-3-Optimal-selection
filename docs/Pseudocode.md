@@ -100,3 +100,11 @@
 	 	- Calculate new combinations (that *p* does not include) which include *r* and up to *n* other items.
  		- Sort these combinations by weight then rating. If a new combo *a* has higher rating than *b* AND *a*'s weight <= *b*'s weight then delete *b*.
  		- Add new combinations that remain to *p*.
+
+
+# Change Request
+
+	- if payload includes items.contains Solar Flares && Solar Power && Sun Spots, reject
+	- if payload includes items.contains Seed Viability && Yeast Fermentation, total weight -= 7 
+	- (check must happen before experiment gets rejected by totalWeight += weight <= maxWeight
+	- if payload includes items.contains Cosmic Rays (Secondary Band) && !Cosmic Rays (Primary Band), reject
