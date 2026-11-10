@@ -17,6 +17,11 @@ public class Strategies {
 	
 	private static List<Experiment> experiments;
 	
+	private static List<String> exclusiveConstraint1  = new ArrayList<>();
+	private static List<String> combinedSavings1  = new ArrayList<>();
+	private static int savings1;
+	private static List<String> preReqConstraint1  = new ArrayList<>();
+	
 	Strategies() {
 		
 	}
@@ -126,10 +131,19 @@ public class Strategies {
 						new Experiment("Mice Tumors", 65, 8),
 						new Experiment("Microgravity Plant Growth", 75, 5),
 						new Experiment("Micrometeorites", 170, 9),
-						new Experiment("Cosmic Rays", 80, 7),
+						new Experiment("Cosmic Rays (Primary Band)", 80, 7),
+						new Experiment("Cosmic Rays (Secondary Band)", 10, 5),
 						new Experiment("Yeast Fermentation", 27, 4)
 				));
 		int limit = 700;
+		
+//		List<String> exclusiveConstraint  = new ArrayList<>(List.of("Solar Flares", "Solar Power", "Sun Spots"));
+		exclusiveConstraint1  = new ArrayList<>(List.of("Solar Flares", "Solar Power", "Sun Spots"));
+		combinedSavings1  = new ArrayList<>(List.of("Seed Viability", "Yeast Fermentation"));
+		savings1 = 7;
+		preReqConstraint1  = new ArrayList<>(List.of("Cosmic Rays (Primary Band)", "Cosmic Rays (Secondary Band)"));
+		
+		
 		
 		System.out.println("Greedy Strategies: \n");
 		

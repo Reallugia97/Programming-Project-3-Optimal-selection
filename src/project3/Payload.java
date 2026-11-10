@@ -19,6 +19,11 @@ public class Payload {
 	int totalRating;
 	boolean validPayload = true;
 	
+	List<Experiment> exclusiveConstraint  = new ArrayList<>();
+	List<String> combinedSavings  = new ArrayList<>();
+	int savings;
+	List<String> preReqConstraint  = new ArrayList<>();
+	
 	void add(Experiment e) {
 		items.add(e);
 		totalWeight += e.weight;
@@ -29,10 +34,42 @@ public class Payload {
 	// (check must happen before experiment gets rejected by totalWeight += weight <= maxWeight
 	// if payload includes items.name.equals Cosmic Rays (Secondary Band) && !Cosmic Rays (Primary Band), reject
 	
-	void checkExclusive(Experiment a, Experiment b, Experiment c) {
-		if (items.contains(a) && items.contains(b) && items.contains(c)) {
-			validPayload = false;
+	public void addConstraints(List<Experiment> exclusiveConstraint1,
+			List<String> combinedSavings1, int savings1,
+			List<String> preReqConstraint1) {
+		exclusiveConstraint = exclusiveConstraint1;
+		combinedSavings = combinedSavings1;
+		savings = savings1;
+		preReqConstraint = preReqConstraint1;
+	}
+	
+	public void addexclusiveConstraint(List<Experiment> exclusiveConstraint1)
+	{
+		exclusiveConstraint = exclusiveConstraint1;
+	}
+	
+	public void interactionEffects()
+	{
+		checkExclusive();
+//		checkCombined();
+//		checkPrereq()
+	}
+	
+//	void checkExclusive(Experiment a, Experiment b, Experiment c) {
+	void checkExclusive() {
+//		if (items.contains(a) && items.contains(b) && items.contains(c)) {
+//			validPayload = false;
+//		}
+		
+		//use a test to make sure there's not a type issue
+		//between items (experiment list) and checking if it contains a string
+		for(Experiment item : exclusiveConstraint)
+		{
+			if(!items.contains(item))
+				return;
 		}
+		
+		validPayload = false;
 	}
 	
 	void checkCombined(Experiment a, Experiment b, int weightSavings) {

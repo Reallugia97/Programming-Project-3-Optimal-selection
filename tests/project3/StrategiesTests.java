@@ -2,6 +2,7 @@ package project3;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -51,25 +52,48 @@ class StrategiesTests {
 	
 	//called with something like
 	//applyCombinationEffects();
+	
+	/*
+	 	exclusiveConstraint1  = new ArrayList<>(List.of("Solar Flares", "Solar Power", "Sun Spots"));
+		combinedSavings1  = new ArrayList<>(List.of("Seed Viability", "Yeast Fermentation"));
+		savings1 = 7;
+		preReqConstraint1  = new ArrayList<>(List.of("Cosmic Rays (Primary Band)", "Cosmic Rays (Secondary Band)"));
+		
+	 */
 	@Test
 	void testSolarLimit() {
+		ArrayList<Experiment> exclusiveConstraint1 = new ArrayList<>(List.of(
+				new Experiment("Solar Flares", 264, 9), 
+				new Experiment("Solar Power", 188, 6), 
+				new Experiment("Sun Spots", 90, 2)));
 		
+		Payload impossible = new Payload();
+//		impossible.addConstraints(exclusiveConstraint1, null, 0, null);
+		impossible.addexclusiveConstraint(exclusiveConstraint1);
+		impossible.add(new Experiment("Solar Flares", 264, 9));
+		impossible.add(new Experiment("Solar Power", 188, 6));
+		impossible.add(new Experiment("Sun Spots", 90, 2));
+		impossible.interactionEffects();
+		assertEquals(false, impossible.validPayload);
 	}
-
-//	static final List<Experiment> EXPERIMENTS = List.of(
-//	new Experiment("Cloud Patterns", 36, 5),
-//	new Experiment("Solar Flares", 264, 9),
-//	new Experiment("Solar Power", 188, 6),
-//	new Experiment("Binary Stars", 203, 8),
-//	new Experiment("Relativity", 104, 8),
-//	new Experiment("Seed Viablity", 7, 4),
-//	new Experiment("Sun Spots", 90, 2),
-//	new Experiment("Mice Tumors", 65, 8),
-//	new Experiment("Microgravity Plant Growth", 75, 5),
-//	new Experiment("Micrometeorites", 170, 9),
-//	new Experiment("Cosmic Rays", 80, 7),
-//	new Experiment("Yeast Fermentation", 27, 4)
-//	);
+	
+	/*
+	 List.of(
+						new Experiment("Cloud Patterns", 36, 5),
+						new Experiment("Solar Flares", 264, 9),
+						new Experiment("Solar Power", 188, 6),
+						new Experiment("Binary Stars", 203, 8),
+						new Experiment("Relativity", 104, 8),
+						new Experiment("Seed Viability", 7, 4),
+						new Experiment("Sun Spots", 90, 2),
+						new Experiment("Mice Tumors", 65, 8),
+						new Experiment("Microgravity Plant Growth", 75, 5),
+						new Experiment("Micrometeorites", 170, 9),
+						new Experiment("Cosmic Rays (Primary Band)", 80, 7),
+						new Experiment("Cosmic Rays (Secondary Band)", 10, 5),
+						new Experiment("Yeast Fermentation", 27, 4)
+				));
+	 */
 	
 	/*
 	 * ID	Science package	Baseline mass (kg)	Science rating
