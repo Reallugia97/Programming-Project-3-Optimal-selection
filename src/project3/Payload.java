@@ -21,7 +21,7 @@ public class Payload {
 	
 	List<Experiment> exclusiveConstraint  = new ArrayList<>();
 	List<Experiment> combinedSavings  = new ArrayList<>();
-	int savings;
+	int weightSavings;
 	List<Experiment> preReqConstraint  = new ArrayList<>();
 	
 	void add(Experiment e) {
@@ -39,7 +39,7 @@ public class Payload {
 			List<Experiment> preReqConstraint1) {
 		exclusiveConstraint = exclusiveConstraint1;
 		combinedSavings = combinedSavings1;
-		savings = savings1;
+		weightSavings = savings1;
 		preReqConstraint = preReqConstraint1;
 	}
 	
@@ -72,14 +72,24 @@ public class Payload {
 		validPayload = false;
 	}
 	
-	void checkCombined(Experiment a, Experiment b, int weightSavings) {
-		if (items.contains(a) && items.contains(b)) {
+//	void checkCombined(Experiment a, Experiment b, int weightSavings) {
+	void checkCombined() {
+//		if (items.contains(a) && items.contains(b)) {
+//			totalWeight -= weightSavings;
+//		}
+		
+		if(items.contains(combinedSavings.getFirst()) && items.contains(combinedSavings.getLast()))
 			totalWeight -= weightSavings;
-		}
+		
 	}
 	
-	void checkPrereq(Experiment a, Experiment b) {
-		if (items.contains(b) && !items.contains(a)) {
+//	void checkPrereq(Experiment a, Experiment b) {
+	void checkPrereq() {
+//		if (items.contains(b) && !items.contains(a)) {
+//			validPayload = false;
+//		}
+		
+		if (items.contains(preReqConstraint.getLast()) && !items.contains(preReqConstraint.getFirst())) {
 			validPayload = false;
 		}
 	}
