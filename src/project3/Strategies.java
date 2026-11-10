@@ -36,6 +36,8 @@ public class Strategies {
 		Payload payload = new Payload();
 		
 		for (Experiment e : sorted) {
+			// Check payload change request requirements here
+			
 			if (payload.totalWeight + e.weight <= maxWeight) {
 				payload.add(e);
 			}
@@ -78,6 +80,7 @@ public class Strategies {
 			}
 			
 			// Adds payload to list of valid payloads if its within maxWeight
+			// Check payload change request requirements here
 			if (p.totalWeight <= maxWeight) {
 				valid.add(p);
 			}
