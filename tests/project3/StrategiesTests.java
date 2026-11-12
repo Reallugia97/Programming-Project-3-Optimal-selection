@@ -26,7 +26,7 @@ class StrategiesTests {
 	@Test
 	void testHighestRatingStrat() {
 		Payload small = new Payload();
-		small.add(new Experiment("bass", 11, 4));
+		small.add(new Experiment("bass", 10, 4));
 
 		assertEquals(s.highestRatingFirst(10).items.getFirst().name, small.items.getFirst().name);
 	}
