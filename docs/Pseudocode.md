@@ -93,7 +93,7 @@
 	  			- check which of the 3 has the highest rating - *p_i*, left cell, cell above - and set the current cell equal to it.
 	  			- Call method newCombinations.
 	  		- Else
-	  			- check which of the 3 has the highest rating - *p_i*, left cell, cell above - and set dynamic[r][weight] equal to it.
+	  			- check which of the 3 has the highest rating - *p_i*, left cell, cell above - and set dynamic[r]-[weight] equal to it.
 	  	- 
 	  - method newCombinations:
 		- Increment *n* by 1.
