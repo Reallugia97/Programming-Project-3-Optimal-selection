@@ -34,7 +34,10 @@ public class Payload {
 		this.totalWeight = totalWeight;
 		this.totalRating = totalRating;
 		this.validPayload = validPayload;
-		this.exclusiveConstraint = exclusiveConstraint;
+		
+		//linking the lists for constraints is fine because the constraints are hardcoded
+		//and set once, never changed after
+		this.exclusiveConstraint = exclusiveConstraint; 
 		this.combinedSavings = combinedSavings;
 		this.weightSavings = weightSavings;
 		this.preReqConstraint = preReqConstraint;
