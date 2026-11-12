@@ -24,6 +24,32 @@ public class Payload {
 	int weightSavings;
 	List<Experiment> preReqConstraint  = new ArrayList<>();
 	
+	public Payload() {
+	}
+	
+	public Payload(int totalWeight, int totalRating, boolean validPayload, List<Experiment> exclusiveConstraint,
+			List<Experiment> combinedSavings, int weightSavings, List<Experiment> preReqConstraint) {
+		super();
+		this.totalWeight = totalWeight;
+		this.totalRating = totalRating;
+		this.validPayload = validPayload;
+		this.exclusiveConstraint = exclusiveConstraint;
+		this.combinedSavings = combinedSavings;
+		this.weightSavings = weightSavings;
+		this.preReqConstraint = preReqConstraint;
+	}
+	
+	public Payload(Payload old) {
+		super();
+		this.totalWeight = old.totalWeight;
+		this.totalRating = old.totalRating;
+		this.validPayload = old.validPayload;
+		this.exclusiveConstraint = old.exclusiveConstraint;
+		this.combinedSavings = old.combinedSavings;
+		this.weightSavings = old.weightSavings;
+		this.preReqConstraint = old.preReqConstraint;
+	}
+
 	void add(Experiment e) {
 		items.add(e);
 		totalWeight += e.weight;

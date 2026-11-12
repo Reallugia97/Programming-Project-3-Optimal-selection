@@ -27,10 +27,10 @@ public class Experiment {
 		return (double) rating / weight;
 	}
 
-//	@Override
-//	public int hashCode() {
-//		return Objects.hash(name, rating, weight);
-//	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, rating, weight);
+	}
 
 	@Override
 	public boolean equals(Object obj) {

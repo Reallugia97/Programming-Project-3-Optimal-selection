@@ -40,13 +40,31 @@ public class Strategies {
 		
 		Payload payload = new Payload();
 		
+		
+		payload.addConstraints(exclusiveConstraint1, combinedSavings1, savings1, preReqConstraint1);
+		
+//		boolean combinedSavings 
+		
 		for (Experiment e : sorted) {
-			// Check payload change request requirements here
-			
-			if (payload.totalWeight + e.weight <= maxWeight) {
+			if (payload.totalWeight + e.weight <= maxWeight && payload.validPayload) {
 				payload.add(e);
 			}
+			else if(combinedSavings1.contains(e))
+			{
+				Payload speculativePayload = new Payload(payload);
+//				private static List<Experiment> speculativePayload;
+				
+				//TODO check the items don't have the same reference
+				//and properties of both don't have the same reference
+				speculativePayload.add(e);
+				speculativePayload.interactionEffects();
+				if (speculativePayload.totalWeight <= maxWeight && speculativePayload.validPayload) {
+					payload.add(e);
+				}
+			}
 		}
+		
+		
 		return payload;
 	}
 	
