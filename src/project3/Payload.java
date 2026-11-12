@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Payload {
 
-	final List<Experiment> items = new ArrayList<>();
+	List<Experiment> items = new ArrayList<>();
 	int totalWeight;
 	int totalRating;
 	boolean validPayload = true;
@@ -27,9 +27,10 @@ public class Payload {
 	public Payload() {
 	}
 	
-	public Payload(int totalWeight, int totalRating, boolean validPayload, List<Experiment> exclusiveConstraint,
+	public Payload(List<Experiment> items, int totalWeight, int totalRating, boolean validPayload, List<Experiment> exclusiveConstraint,
 			List<Experiment> combinedSavings, int weightSavings, List<Experiment> preReqConstraint) {
 		super();
+		this.items = items;
 		this.totalWeight = totalWeight;
 		this.totalRating = totalRating;
 		this.validPayload = validPayload;
@@ -41,6 +42,7 @@ public class Payload {
 	
 	public Payload(Payload old) {
 		super();
+		this.items = old.items;
 		this.totalWeight = old.totalWeight;
 		this.totalRating = old.totalRating;
 		this.validPayload = old.validPayload;
