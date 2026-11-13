@@ -9,6 +9,12 @@ import org.junit.jupiter.api.Test;
 
 /**
  * TODO
+ * 
+ * @team_Name Rocket Escape
+ * @team_Members BraydenBigelow, NathanJohnson
+ * @course_and_Section CS-2430, section 001
+ * @project_Name Programming Project 3 - Fall 2026
+ * @author NathanJohnson
  */
 class StrategiesTests {
 
