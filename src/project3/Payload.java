@@ -17,32 +17,44 @@ public class Payload {
 	List<Experiment> items = new ArrayList<>();
 	int totalWeight;
 	int totalRating;
-	boolean validPayload = true; //this is for keeping track of constraints
-	
-	List<Experiment> exclusiveConstraint  = new ArrayList<>();
-	List<Experiment> combinedSavings  = new ArrayList<>();
+	boolean validPayload = true; // this is for keeping track of constraints
+
+	// Experiments are ONLY ADDED to payloads.
+	List<Experiment> exclusiveConstraint = new ArrayList<>();
+	List<Experiment> combinedSavings = new ArrayList<>();
 	int weightSavings;
-	List<Experiment> preReqConstraint  = new ArrayList<>();
-	
+	List<Experiment> preReqConstraint = new ArrayList<>();
+	boolean massCredit = false;
+	// Once massCredit is true, the weightSavings are never realized again.
+	// In the sense that false is 0 and true is 1, massCredit is monotonically
+	// increasing.
+
+	// This implementation supports ONE combinedSavings list.
+	// With more than one, weightSavings and massCredit would have to be lists,
+	// and the associated checks would have to be positional.
+
 	public Payload() {
 	}
-	
-	public Payload(List<Experiment> items, int totalWeight, int totalRating, boolean validPayload, List<Experiment> exclusiveConstraint,
-			List<Experiment> combinedSavings, int weightSavings, List<Experiment> preReqConstraint) {
+
+	public Payload(List<Experiment> items, int totalWeight, int totalRating, boolean validPayload,
+			List<Experiment> exclusiveConstraint,
+			List<Experiment> combinedSavings, int weightSavings, List<Experiment> preReqConstraint, boolean massCredit) {
 		super();
 		this.items = new ArrayList<>(items);
 		this.totalWeight = totalWeight;
 		this.totalRating = totalRating;
 		this.validPayload = validPayload;
-		
-		//linking the lists for constraints is fine because the constraints are hardcoded
-		//and set once, never changed after
-		this.exclusiveConstraint = exclusiveConstraint; 
+
+		// linking the lists for constraints is fine because the constraints are
+		// hardcoded
+		// and set once, never changed after
+		this.exclusiveConstraint = exclusiveConstraint;
 		this.combinedSavings = combinedSavings;
 		this.weightSavings = weightSavings;
 		this.preReqConstraint = preReqConstraint;
+		this.massCredit = massCredit;
 	}
-	
+
 	public Payload(Payload old) {
 		super();
 		this.items = new ArrayList<>(old.items);
@@ -53,6 +65,7 @@ public class Payload {
 		this.combinedSavings = old.combinedSavings;
 		this.weightSavings = old.weightSavings;
 		this.preReqConstraint = old.preReqConstraint;
+		this.massCredit = old.massCredit;
 	}
 
 	void add(Experiment e) {
@@ -60,7 +73,7 @@ public class Payload {
 		totalWeight += e.weight;
 		totalRating += e.rating;
 	}
-	
+
 	public void addConstraints(List<Experiment> exclusiveConstraint1,
 			List<Experiment> combinedSavings1, int savings1,
 			List<Experiment> preReqConstraint1) {
@@ -69,51 +82,47 @@ public class Payload {
 		weightSavings = savings1;
 		preReqConstraint = preReqConstraint1;
 	}
-	
-	public void addexclusiveConstraint(List<Experiment> exclusiveConstraint1)
-	{
+
+	public void addexclusiveConstraint(List<Experiment> exclusiveConstraint1) {
 		exclusiveConstraint = exclusiveConstraint1;
 	}
-	
-	public void interactionEffects()
-	{
-		/*
-		 List<Experiment> exclusiveConstraint  = new ArrayList<>();
-	List<Experiment> combinedSavings  = new ArrayList<>();
-	int weightSavings;
-	List<Experiment> preReqConstraint  = new ArrayList<>();
-		 */
-		if(exclusiveConstraint != null && !exclusiveConstraint.isEmpty())
+
+	public void interactionEffects() {
+		validPayload = true;
+
+		if (exclusiveConstraint != null && !exclusiveConstraint.isEmpty())
 			checkExclusive();
-		
-		if(combinedSavings != null && !combinedSavings.isEmpty() && weightSavings != 0)
+
+		if (combinedSavings != null && !combinedSavings.isEmpty() && weightSavings != 0)
 			checkCombined();
-		
-		if(preReqConstraint!= null && !preReqConstraint.isEmpty())
+
+		if (preReqConstraint != null && !preReqConstraint.isEmpty())
 			checkPrereq();
 	}
-	
+
 	void checkExclusive() {
 
-		for(Experiment item : exclusiveConstraint)
-		{
-			if(!items.contains(item))
+		for (Experiment item : exclusiveConstraint) {
+			if (!items.contains(item))
 				return;
 		}
-		
+
 		validPayload = false;
 	}
-	
+
 	void checkCombined() {
-		if(items.contains(combinedSavings.getFirst()) && items.contains(combinedSavings.getLast()))
-			totalWeight -= weightSavings;
-	}
-	
-//	void checkPrereq(Experiment a, Experiment b) {
-	void checkPrereq() {
 		
-		if (items.contains(preReqConstraint.getLast()) && !items.contains(preReqConstraint.getFirst())) {
-			validPayload = false;
+		if (massCredit)
+			return;
+
+		if (items.contains(combinedSavings.getFirst()) && items.contains(combinedSavings.getLast())) {
+			totalWeight -= weightSavings;
+			massCredit = true;
 		}
+	}
+
+	void checkPrereq() {
+		if (items.contains(preReqConstraint.getLast()) && !items.contains(preReqConstraint.getFirst()))
+			validPayload = false;
 	}
 }
