@@ -45,11 +45,6 @@ class StrategiesTests {
 		assertEquals(s.highestRatioFirst(6).items.getFirst().name, small.items.getFirst().name);
 	}
 	
-	//constraints:
-	//limit constraint: cannot have all 3 solar on the same payload
-	//mass credit/shared component: a and b have lower weight together
-	//pre-req constraint: cannot have b without a (11a requires 11)
-	
 	//called with something like
 	//applyCombinationEffects();
 	
@@ -77,15 +72,57 @@ class StrategiesTests {
 		assertEquals(false, impossible.validPayload);
 	}
 	
-	/*
-	 combinedSavings1  = new ArrayList<>(List.of(
+	@Test
+	void testMassCredit() {
+		ArrayList<Experiment> combinedSavings1  = new ArrayList<>(List.of(
 				new Experiment("Seed Viability", 7, 4),
 				new Experiment("Yeast Fermentation", 27, 4)));
-		savings1 = 7;
-		preReqConstraint1  = new ArrayList<>(List.of(
-				new Experiment("Cosmic Rays (Primary Band)", 80, 7), 
-				new Experiment("Cosmic Rays (Secondary Band)", 10, 5)));
-	 */
+		int savings1 = 7;
+		
+		Payload efficientCombo = new Payload();
+		efficientCombo.add(new Experiment("Seed Viability", 7, 4));
+		efficientCombo.add(new Experiment("Yeast Fermentation", 27, 4));
+		
+		assertEquals(34, efficientCombo.totalWeight);
+		
+		efficientCombo.addConstraints(null, combinedSavings1, savings1, null);
+		efficientCombo.interactionEffects();
+		
+		assertEquals(27, efficientCombo.totalWeight);	
+	}
+	
+	@Test
+	void testPreReqConstraint() {
+		Experiment a = new Experiment("Cosmic Rays (Primary Band)", 80, 7);
+		Experiment b = new Experiment("Cosmic Rays (Secondary Band)", 10, 5);
+		
+		ArrayList<Experiment> preReqConstraint1  = new ArrayList<>(List.of(
+				a, b));
+		
+		Payload p_a = new Payload();
+		p_a.addConstraints(null, null, 0, preReqConstraint1);
+		p_a.interactionEffects();
+		assertEquals(p_a.validPayload, true);
+		
+		p_a.add(a);
+		p_a.interactionEffects();
+		assertEquals(p_a.validPayload, true);
+		
+		Payload p_b = new Payload();
+		p_b.addConstraints(null, null, 0, preReqConstraint1);
+		p_b.interactionEffects();
+		assertEquals(p_b.validPayload, true);
+
+		p_b.add(b);
+		p_b.interactionEffects();
+		assertEquals(false, p_b.validPayload);
+		
+		Payload p_aAndB = new Payload();
+		p_aAndB.add(a);
+		p_aAndB.add(b);
+		p_aAndB.interactionEffects();
+		assertEquals(p_aAndB.validPayload, true);
+	}
 	
 	/*
 	 List.of(
@@ -104,24 +141,4 @@ class StrategiesTests {
 						new Experiment("Yeast Fermentation", 27, 4)
 				));
 	 */
-	
-	/*
-	 * ID	Science package	Baseline mass (kg)	Science rating
-1	Cloud Patterns	36	5
-2	Solar Flares	264	9
-3	Solar Power	188	6
-4	Binary Stars	203	8
-5	Relativity	104	8
-6	Seed Viability	7	4
-7	Sun Spots	90	2
-8	Mice Tumors	65	8
-9	Microgravity Plant Growth	75	5
-10	Micrometeorites	170	9
-11	Cosmic Rays (Primary Band)	80	7
-11a	Cosmic Rays (Secondary Band)	10	5
-12	Yeast Fermentation	27	4
-
-	 */
-
-
 }

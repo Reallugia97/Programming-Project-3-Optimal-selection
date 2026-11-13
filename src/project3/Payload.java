@@ -60,10 +60,6 @@ public class Payload {
 		totalWeight += e.weight;
 		totalRating += e.rating;
 	}
-	// if payload includes items.name.equals Solar Flares && Solar Power && Sun Spots, reject
-	// if payload includes items.name.equals Seed Viability && Yeast Fermentation, total weight -= 7 
-	// (check must happen before experiment gets rejected by totalWeight += weight <= maxWeight
-	// if payload includes items.name.equals Cosmic Rays (Secondary Band) && !Cosmic Rays (Primary Band), reject
 	
 	public void addConstraints(List<Experiment> exclusiveConstraint1,
 			List<Experiment> combinedSavings1, int savings1,
@@ -81,9 +77,20 @@ public class Payload {
 	
 	public void interactionEffects()
 	{
-		checkExclusive();
-//		checkCombined();
-//		checkPrereq()
+		/*
+		 List<Experiment> exclusiveConstraint  = new ArrayList<>();
+	List<Experiment> combinedSavings  = new ArrayList<>();
+	int weightSavings;
+	List<Experiment> preReqConstraint  = new ArrayList<>();
+		 */
+		if(exclusiveConstraint != null && !exclusiveConstraint.isEmpty())
+			checkExclusive();
+		
+		if(combinedSavings != null && !combinedSavings.isEmpty() && weightSavings != 0)
+			checkCombined();
+		
+		if(preReqConstraint!= null && !preReqConstraint.isEmpty())
+			checkPrereq();
 	}
 	
 //	void checkExclusive(Experiment a, Experiment b, Experiment c) {
