@@ -69,8 +69,8 @@ class StrategiesTests {
 				new Experiment("Sun Spots", 90, 2)));
 		
 		Payload impossible = new Payload();
-//		impossible.addConstraints(exclusiveConstraint1, null, 0, null);
-		impossible.addexclusiveConstraint(exclusiveConstraint1);
+		impossible.addConstraints(exclusiveConstraint1, null, 0, null);
+//		impossible.addexclusiveConstraint(exclusiveConstraint1);
 		impossible.add(new Experiment("Solar Flares", 264, 9));
 		impossible.add(new Experiment("Solar Power", 188, 6));
 		impossible.add(new Experiment("Sun Spots", 90, 2));
