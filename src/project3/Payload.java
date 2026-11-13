@@ -17,7 +17,7 @@ public class Payload {
 	List<Experiment> items = new ArrayList<>();
 	int totalWeight;
 	int totalRating;
-	boolean validPayload = true;
+	boolean validPayload = true; //this is for keeping track of constraints
 	
 	List<Experiment> exclusiveConstraint  = new ArrayList<>();
 	List<Experiment> combinedSavings  = new ArrayList<>();
@@ -93,14 +93,8 @@ public class Payload {
 			checkPrereq();
 	}
 	
-//	void checkExclusive(Experiment a, Experiment b, Experiment c) {
 	void checkExclusive() {
-//		if (items.contains(a) && items.contains(b) && items.contains(c)) {
-//			validPayload = false;
-//		}
-		
-		//use a test to make sure there's not a type issue
-		//between items (experiment list) and checking if it contains a string
+
 		for(Experiment item : exclusiveConstraint)
 		{
 			if(!items.contains(item))
@@ -110,22 +104,13 @@ public class Payload {
 		validPayload = false;
 	}
 	
-//	void checkCombined(Experiment a, Experiment b, int weightSavings) {
 	void checkCombined() {
-//		if (items.contains(a) && items.contains(b)) {
-//			totalWeight -= weightSavings;
-//		}
-		
 		if(items.contains(combinedSavings.getFirst()) && items.contains(combinedSavings.getLast()))
 			totalWeight -= weightSavings;
-		
 	}
 	
 //	void checkPrereq(Experiment a, Experiment b) {
 	void checkPrereq() {
-//		if (items.contains(b) && !items.contains(a)) {
-//			validPayload = false;
-//		}
 		
 		if (items.contains(preReqConstraint.getLast()) && !items.contains(preReqConstraint.getFirst())) {
 			validPayload = false;

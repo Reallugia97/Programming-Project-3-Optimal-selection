@@ -51,16 +51,6 @@ class StrategiesTests {
 		assertEquals(s.highestRatioFirst(6).items.getFirst().name, small.items.getFirst().name);
 	}
 	
-	//called with something like
-	//applyCombinationEffects();
-	
-	/*
-	 	exclusiveConstraint1  = new ArrayList<>(List.of("Solar Flares", "Solar Power", "Sun Spots"));
-		combinedSavings1  = new ArrayList<>(List.of("Seed Viability", "Yeast Fermentation"));
-		savings1 = 7;
-		preReqConstraint1  = new ArrayList<>(List.of("Cosmic Rays (Primary Band)", "Cosmic Rays (Secondary Band)"));
-		
-	 */
 	@Test
 	void testSolarLimit() {
 		ArrayList<Experiment> exclusiveConstraint1 = new ArrayList<>(List.of(
@@ -105,29 +95,29 @@ class StrategiesTests {
 		ArrayList<Experiment> preReqConstraint1  = new ArrayList<>(List.of(
 				a, b));
 		
-		Payload p_a = new Payload();
-		p_a.addConstraints(null, null, 0, preReqConstraint1);
-		p_a.interactionEffects();
-		assertEquals(p_a.validPayload, true);
+		Payload payloadA = new Payload();
+		payloadA.addConstraints(null, null, 0, preReqConstraint1);
+		payloadA.interactionEffects();
+		assertEquals(payloadA.validPayload, true);
 		
-		p_a.add(a);
-		p_a.interactionEffects();
-		assertEquals(p_a.validPayload, true);
+		payloadA.add(a);
+		payloadA.interactionEffects();
+		assertEquals(payloadA.validPayload, true);
 		
-		Payload p_b = new Payload();
-		p_b.addConstraints(null, null, 0, preReqConstraint1);
-		p_b.interactionEffects();
-		assertEquals(p_b.validPayload, true);
+		Payload payloadB = new Payload();
+		payloadB.addConstraints(null, null, 0, preReqConstraint1);
+		payloadB.interactionEffects();
+		assertEquals(payloadB.validPayload, true);
 
-		p_b.add(b);
-		p_b.interactionEffects();
-		assertEquals(false, p_b.validPayload);
+		payloadB.add(b);
+		payloadB.interactionEffects();
+		assertEquals(false, payloadB.validPayload);
 		
-		Payload p_aAndB = new Payload();
-		p_aAndB.add(a);
-		p_aAndB.add(b);
-		p_aAndB.interactionEffects();
-		assertEquals(p_aAndB.validPayload, true);
+		Payload payloadAAndB = new Payload();
+		payloadAAndB.add(a);
+		payloadAAndB.add(b);
+		payloadAAndB.interactionEffects();
+		assertEquals(payloadAAndB.validPayload, true);
 	}
 	
 	/*
