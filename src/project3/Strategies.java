@@ -41,8 +41,6 @@ public class Strategies {
 		sorted.sort(order);
 		
 		Payload payload = new Payload();
-		
-		
 		payload.addConstraints(exclusiveConstraint1, combinedSavings1, savings1, preReqConstraint1);
 		
 		for (Experiment e : sorted) {
@@ -65,7 +63,6 @@ public class Strategies {
 				}
 			}
 		}
-		
 		
 		return payload;
 	}
@@ -96,6 +93,7 @@ public class Strategies {
 		// Buids every combination of n bits
 		for (int mask = 0; mask < totalPayloads; mask++) {
 			Payload p = new Payload();
+			p.addConstraints(exclusiveConstraint1, combinedSavings1, savings1, preReqConstraint1);
 			
 			// Builds the payload for the current bit combination
 			for (int bit = 0; bit < n; bit++) {
@@ -104,14 +102,15 @@ public class Strategies {
 				}
 			}
 			
+			p.interactionEffects(); //if the payload is invalid or has a mass credit, this call will fix that
+			
 			// Adds payload to list of valid payloads if its within maxWeight
 			// Check payload change request requirements here
-			if (p.totalWeight <= maxWeight) {
+			if (p.totalWeight <= maxWeight && p.validPayload) {
 				valid.add(p);
 			}
 		}
 		return valid;
-		
 	}
 	
 	static void printPayload(Payload p) {
@@ -157,7 +156,6 @@ public class Strategies {
 				));
 		int limit = 700;
 		
-//		List<String> exclusiveConstraint  = new ArrayList<>(List.of("Solar Flares", "Solar Power", "Sun Spots"));
 		ArrayList<Experiment> exclusiveConstraint1 = new ArrayList<>(List.of(
 				new Experiment("Solar Flares", 264, 9), 
 				new Experiment("Solar Power", 188, 6), 
@@ -169,8 +167,6 @@ public class Strategies {
 		preReqConstraint1  = new ArrayList<>(List.of(
 				new Experiment("Cosmic Rays (Primary Band)", 80, 7), 
 				new Experiment("Cosmic Rays (Secondary Band)", 10, 5)));
-		
-		
 		
 		System.out.println("Greedy Strategies: \n");
 		
