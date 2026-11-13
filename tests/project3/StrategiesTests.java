@@ -120,6 +120,20 @@ class StrategiesTests {
 		assertEquals(payloadAAndB.validPayload, true);
 	}
 	
+	//if this test fails, modify Experiment constructors, .equals, and hashCode BEFORE incrementing 
+	@Test
+	void testNumOfExperimentParameters() {
+		Experiment e = new Experiment("Cosmic Rays (Primary Band)", 80, 7);
+		assertEquals(3, e.getClass().getDeclaredFields().length);
+	}
+	
+	//if this test fails, modify Payload constructors BEFORE incrementing 
+		@Test
+		void testNumOfObjectParameters() {
+			Payload p = new Payload();
+			assertEquals(9, p.getClass().getDeclaredFields().length);
+		}
+	
 	/*
 	 List.of(
 						new Experiment("Cloud Patterns", 36, 5),
