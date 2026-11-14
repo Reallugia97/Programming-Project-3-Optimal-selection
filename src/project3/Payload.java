@@ -49,7 +49,7 @@ public class Payload {
 		this.combinedSavings = combinedSavings;			// since the constraints are hardcoded.		
 		this.weightSavings = weightSavings;				// Set initially, never changed after.
 		this.preReqConstraint = preReqConstraint;
-		this.massCredit = massCredit;
+		this.massCredit = massCredit;  //mass credit is copied, so payloads can't get weight saving twice
 		
 		this.interactionEffects();
 	}
@@ -65,7 +65,7 @@ public class Payload {
 		this.combinedSavings = old.combinedSavings;
 		this.weightSavings = old.weightSavings;
 		this.preReqConstraint = old.preReqConstraint;
-		this.massCredit = old.massCredit;
+		this.massCredit = old.massCredit;  //mass credit is copied, so payloads can't get weight saving twice
 		
 		this.interactionEffects();
 	}
