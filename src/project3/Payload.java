@@ -36,7 +36,10 @@ public class Payload {
 	public Payload() {
 	}
 
-	//This constructor is here for as a reference to read.
+	//This constructor is here as a reference to be read. It is not used. 
+	//Instead experiments are added to the payload, and interactions are checked.
+	//Use with care. Normally totalRating is automatically updated as you add experiments to the payload.
+	//Likewise with totalWeight, except it also depends on you calling interactionEffects.
 	public Payload(List<Experiment> items, int totalWeight, int totalRating, boolean validPayload,
 			List<Experiment> exclusiveConstraint,
 			List<Experiment> combinedSavings, int weightSavings, List<Experiment> preReqConstraint, boolean massCredit) {
