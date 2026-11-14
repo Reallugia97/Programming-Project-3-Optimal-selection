@@ -222,6 +222,8 @@ class StrategiesTests {
 
 		payloadB.add(b);
 		payloadB.interactionEffects();
+		//Calling this will cause errors if the constraints aren't checked to make sure they're not null
+		
 		assertEquals(payloadB.validPayload, true);
 		//if the constraints aren't added this is a valid payload
 	}
