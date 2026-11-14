@@ -40,19 +40,18 @@ public class Payload {
 			List<Experiment> exclusiveConstraint,
 			List<Experiment> combinedSavings, int weightSavings, List<Experiment> preReqConstraint, boolean massCredit) {
 		super();
-		this.items = new ArrayList<>(items);
+		this.items = new ArrayList<>(items); //changing the new object shouldn't change the old, so new list
 		this.totalWeight = totalWeight;
 		this.totalRating = totalRating;
-		this.validPayload = validPayload;
-
-		// linking the lists for constraints is fine because the constraints are
-		// hardcoded
-		// and set once, never changed after
-		this.exclusiveConstraint = exclusiveConstraint;
-		this.combinedSavings = combinedSavings;
-		this.weightSavings = weightSavings;
+		//this.validPayload = validPayload;
+		//this is handled by interactionEffects below
+		this.exclusiveConstraint = exclusiveConstraint; // Linking the lists for constraints is fine
+		this.combinedSavings = combinedSavings;			// since the constraints are hardcoded.		
+		this.weightSavings = weightSavings;				// Set initially, never changed after.
 		this.preReqConstraint = preReqConstraint;
 		this.massCredit = massCredit;
+		
+		this.interactionEffects();
 	}
 
 	public Payload(Payload old) {
@@ -60,12 +59,15 @@ public class Payload {
 		this.items = new ArrayList<>(old.items);
 		this.totalWeight = old.totalWeight;
 		this.totalRating = old.totalRating;
-		this.validPayload = old.validPayload;
+		//this.validPayload = old.validPayload;
+		//this is handled by interactionEffects below
 		this.exclusiveConstraint = old.exclusiveConstraint;
 		this.combinedSavings = old.combinedSavings;
 		this.weightSavings = old.weightSavings;
 		this.preReqConstraint = old.preReqConstraint;
 		this.massCredit = old.massCredit;
+		
+		this.interactionEffects();
 	}
 
 	void add(Experiment e) {
