@@ -18,10 +18,10 @@ import org.junit.jupiter.api.Test;
  */
 class StrategiesTests {
 
-	@Test
-	void test() {
+//	@Test
+//	void test() {
 //		fail("Not yet implemented");
-	}
+//	}
 
 	Strategies s = new Strategies(List.of(
 			new Experiment("foo", 3, 1),
