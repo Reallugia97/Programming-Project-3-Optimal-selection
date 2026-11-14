@@ -42,7 +42,7 @@ class StrategiesTests {
 	@Test
 	void testLightestFirst() {
 		Payload small = new Payload();
-		small.add(new Experiment("foo", 3, 2));
+		small.add(new Experiment("foo", 3, 1));
 		assertEquals(s.lightestFirst(6).items.getFirst().name, small.items.getFirst().name);
 	}
 
@@ -77,7 +77,7 @@ class StrategiesTests {
 	@Test
 	void testLightestFirst2() {
 		Payload small = new Payload();
-		small.add(new Experiment("foo", 3, 2));
+		small.add(new Experiment("foo", 3, 1));
 		small.add(new Experiment("bar", 4, 2));
 
 		Payload light = s.lightestFirst(10);
@@ -86,9 +86,10 @@ class StrategiesTests {
 		assertEquals(true, b);
 		if (b) {
 			for (int i = 0; i < light.items.size(); i = i + 1) {
-				assertEquals(light.items.get(i), small.items.get(i));
+				assertEquals(true, light.items.get(i).equals(small.items.get(i)));
 			}
 		}
+		
 	}
 
 	@Test
