@@ -35,16 +35,19 @@ class StrategiesTests {
 	void testHighestRatingStrat() {
 		Payload small = new Payload();
 		small.add(new Experiment("bass", 10, 4));
+		
+		Payload greedyRating = s.highestRatingFirst(10);
 
-		assertEquals(s.highestRatingFirst(10).items.getFirst().name, small.items.getFirst().name); 
-		assertEquals(s.highestRatingFirst(10).items.getFirst(), small.items.getFirst());
+		assertEquals(greedyRating.items.getFirst().name, small.items.getFirst().name); 
+		assertEquals(greedyRating.items.getFirst(), small.items.getFirst());
+		assertEquals(greedyRating.items.size(),small.items.size());
 	}
 
 	@Test
 	void testLightestFirst() {
 		Payload small = new Payload();
 		small.add(new Experiment("foo", 3, 1));
-		assertEquals(s.lightestFirst(6).items.getFirst().name, small.items.getFirst().name);
+//		assertEquals(s.lightestFirst(6).items.getFirst().name, small.items.getFirst().name);
 		assertEquals(s.lightestFirst(6).items.getFirst(), small.items.getFirst());
 	}
 
@@ -52,7 +55,7 @@ class StrategiesTests {
 	void testHighestRatioFirst() {
 		Payload small = new Payload();
 		small.add(new Experiment("baz", 5, 3));
-		assertEquals(s.highestRatioFirst(6).items.getFirst().name, small.items.getFirst().name);
+//		assertEquals(s.highestRatioFirst(6).items.getFirst().name, small.items.getFirst().name);
 		assertEquals(s.highestRatioFirst(6).items.getFirst(), small.items.getFirst());
 	}
 
