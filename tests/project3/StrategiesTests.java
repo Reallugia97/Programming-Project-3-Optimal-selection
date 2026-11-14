@@ -36,7 +36,8 @@ class StrategiesTests {
 		Payload small = new Payload();
 		small.add(new Experiment("bass", 10, 4));
 
-		assertEquals(s.highestRatingFirst(10).items.getFirst().name, small.items.getFirst().name);
+		assertEquals(s.highestRatingFirst(10).items.getFirst().name, small.items.getFirst().name); 
+		assertEquals(s.highestRatingFirst(10).items.getFirst(), small.items.getFirst());
 	}
 
 	@Test
@@ -44,6 +45,7 @@ class StrategiesTests {
 		Payload small = new Payload();
 		small.add(new Experiment("foo", 3, 1));
 		assertEquals(s.lightestFirst(6).items.getFirst().name, small.items.getFirst().name);
+		assertEquals(s.lightestFirst(6).items.getFirst(), small.items.getFirst());
 	}
 
 	@Test
@@ -51,6 +53,7 @@ class StrategiesTests {
 		Payload small = new Payload();
 		small.add(new Experiment("baz", 5, 3));
 		assertEquals(s.highestRatioFirst(6).items.getFirst().name, small.items.getFirst().name);
+		assertEquals(s.highestRatioFirst(6).items.getFirst(), small.items.getFirst());
 	}
 
 	// The tests below test greedy strategies on scenarios where they should choose 2 items
@@ -89,7 +92,6 @@ class StrategiesTests {
 				assertEquals(true, light.items.get(i).equals(small.items.get(i)));
 			}
 		}
-		
 	}
 
 	@Test
