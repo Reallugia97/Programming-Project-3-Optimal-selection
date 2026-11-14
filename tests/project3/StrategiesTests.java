@@ -120,6 +120,23 @@ class StrategiesTests {
 		assertEquals(payloadAAndB.validPayload, true);
 	}
 	
+	//the above tests pass null for the two constraints not being tested (and 0 for the int if not used)
+	//interactionEffects calls the methods for all of the 3 which are not null and not empty
+	//the test below passes null for all 3
+	@Test
+	void testAllConstraintsNull()
+	{
+		Experiment a = new Experiment("Cosmic Rays (Primary Band)", 80, 7);
+		Experiment b = new Experiment("Cosmic Rays (Secondary Band)", 10, 5);
+		
+		Payload payloadAAndB = new Payload();
+		payloadAAndB.addConstraints(null, null, 0, null);
+		
+		payloadAAndB.add(b);
+		payloadAAndB.interactionEffects();
+		assertEquals(payloadAAndB.validPayload, true);
+	}
+	
 	//if this test fails, modify Experiment constructors, .equals, and hashCode BEFORE incrementing 
 	@Test
 	void testNumOfExperimentParameters() {
