@@ -36,6 +36,7 @@ public class Payload {
 	public Payload() {
 	}
 
+	//This constructor is here for as a reference to read.
 	public Payload(List<Experiment> items, int totalWeight, int totalRating, boolean validPayload,
 			List<Experiment> exclusiveConstraint,
 			List<Experiment> combinedSavings, int weightSavings, List<Experiment> preReqConstraint, boolean massCredit) {
@@ -49,7 +50,7 @@ public class Payload {
 		this.combinedSavings = combinedSavings;			// since the constraints are hardcoded.		
 		this.weightSavings = weightSavings;				// Set initially, never changed after.
 		this.preReqConstraint = preReqConstraint;
-		this.massCredit = massCredit;  //mass credit is copied, so payloads can't get weight saving twice
+		this.massCredit = massCredit;
 		
 		this.interactionEffects();
 	}
