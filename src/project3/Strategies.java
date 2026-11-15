@@ -43,14 +43,37 @@ public class Strategies {
 		Payload payload = new Payload();
 		payload.addConstraints(exclusiveConstraint1, combinedSavings1, savings1, preReqConstraint1);
 		
-		for (Experiment e : sorted) {
+		int i;
+		int j;
+		for (i = 0; i < sorted.size(); i=i+1)
+		{
+			Experiment e = sorted.get(i);
 			Payload speculativePayload = new Payload(payload);
 			speculativePayload.add(e);
 			speculativePayload.interactionEffects();
 			
 			if (speculativePayload.totalWeight <= maxWeight && speculativePayload.validPayload) {
 				payload.add(e);
+				payload.interactionEffects();
+				
+//				if(combinedSavings1.contains(e) && !payload.massCredit)
+//				{
+//					j=i;
+//					i=sorted.size();
+//				}
 			}
+		}
+		
+		
+		
+//		for (Experiment e : sorted) {
+//			Payload speculativePayload = new Payload(payload);
+//			speculativePayload.add(e);
+//			speculativePayload.interactionEffects();
+//			
+//			if (speculativePayload.totalWeight <= maxWeight && speculativePayload.validPayload) {
+//				payload.add(e);
+//			}
 //			else if(combinedSavings1.contains(e))
 //			{
 //				
@@ -66,7 +89,7 @@ public class Strategies {
 //					payload.add(e);
 //				}
 //			}
-		}
+//		}
 		
 		return payload;
 	}
