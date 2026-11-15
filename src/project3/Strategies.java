@@ -74,56 +74,55 @@ public class Strategies {
 		payload.addConstraints(exclusiveConstraint1, combinedSavings1, savings1, preReqConstraint1);
 		boolean massCreditApplied = false;
 		
-//		int i;
 		for (int i = 0; i < sorted.size(); i=i+1)
 		{
 			Experiment e = sorted.get(i);
 			
-			if(!payload.items.contains(e))
+			if(payload.items.contains(e))
+				continue;
+			
+			if(massCreditApplied && e == y)
+				continue;
+			
+			Payload speculativePayload = new Payload(payload);
+			speculativePayload.add(e);
+			speculativePayload.interactionEffects(massCreditApplied);
+			if(speculativePayload.massCredit)
 			{
-				Payload speculativePayload = new Payload(payload);
-				speculativePayload.add(e);
-				speculativePayload.interactionEffects(massCreditApplied);
-				if(speculativePayload.massCredit)
+				Payload sPWithMassCredit = new Payload();
+				for(Experiment old : speculativePayload.items)
 				{
-					Payload sPWithMassCredit = new Payload();
-					for(Experiment old : speculativePayload.items)
+					if(old != y)
+						sPWithMassCredit.add(old);
+					else
 					{
-						if(old != y)
-							sPWithMassCredit.add(old);
-						else
-						{
-							sPWithMassCredit.add(y2);
-							//massCreditApplied = true;
-							//We don't do this because this payload is speculative
-							//if the experiment is added below, then we do this
-						}
+						sPWithMassCredit.add(y2);
+						//massCreditApplied = true;
+						//We don't do this because this payload is speculative
+						//if the experiment is added below, then we do this
 					}
-					speculativePayload = sPWithMassCredit;
 				}
+				speculativePayload = sPWithMassCredit;
+			}
+			
+			if (speculativePayload.totalWeight <= maxWeight && speculativePayload.validPayload) {
+				payload.add(e);
 				
-				if (speculativePayload.totalWeight <= maxWeight && speculativePayload.validPayload) {
-					payload.add(e);
-					
-					if(payload.massCredit)
-						massCreditApplied = true;
-					
-					i = 0;
-					payload.interactionEffects(massCreditApplied);
-					
-					if(!massCreditApplied)
+				if(payload.massCredit)
+					massCreditApplied = true;
+				
+				i = 0;
+				payload.interactionEffects(massCreditApplied);
+				
+				if(!massCreditApplied)
+				{
+					if(e == combinedSavings1.getFirst())
 					{
-						if(e == combinedSavings1.getFirst())
-						{
-							sorted.remove(sorted.indexOf(y));
-							sorted.add(y2);
-							sorted.sort(order);
-							massCreditApplied = true;
-						}
+						sorted.remove(sorted.indexOf(y));
+						sorted.add(y2);
+						sorted.sort(order);
+						massCreditApplied = true;
 					}
-					
-					
-					
 				}
 			}
 		}
