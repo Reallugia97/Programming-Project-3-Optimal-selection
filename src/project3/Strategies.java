@@ -18,11 +18,29 @@ import static org.junit.jupiter.api.Assertions.*;
 public class Strategies {
 	
 	private static List<Experiment> experiments;
+	private static List<Experiment> experimentsWithMassCredit = List.of(
+			new Experiment("Cloud Patterns", 36, 5),
+			new Experiment("Solar Flares", 264, 9),
+			new Experiment("Solar Power", 188, 6),
+			new Experiment("Binary Stars", 203, 8),
+			new Experiment("Relativity", 104, 8),
+			new Experiment("Seed Viability", 7, 4),
+			new Experiment("Sun Spots", 90, 2),
+			new Experiment("Mice Tumors", 65, 8),
+			new Experiment("Microgravity Plant Growth", 75, 5),
+			new Experiment("Micrometeorites", 170, 9),
+			new Experiment("Cosmic Rays (Primary Band)", 80, 7),
+			new Experiment("Cosmic Rays (Secondary Band)", 10, 5),
+			new Experiment("Yeast Fermentation", 20, 4)
+	);
 	
 	private static ArrayList<Experiment> exclusiveConstraint1  = new ArrayList<>();
 	private static ArrayList<Experiment> combinedSavings1  = new ArrayList<>();
 	private static int savings1;
 	private static ArrayList<Experiment> preReqConstraint1  = new ArrayList<>();
+//	private static boolean massCreditApplied = false;
+	static Experiment y = new Experiment("Yeast Fermentation", 27, 4);
+	static Experiment y2 = new Experiment("Yeast Fermentation", 20, 4);
 	
 	Strategies() {
 		
@@ -36,6 +54,17 @@ public class Strategies {
 		return experiments;
 	}
 	
+//	private void checkMassCredit(Payload p)
+//	{
+//		if(massCreditApplied)
+//			return;
+//		
+//		if(p.items.contains(combinedSavings1.getFirst()))
+//		{
+//			
+//		}
+//	}
+	
 //	static Payload greedy(Comparator<Experiment> order, Comparator<Payload> order2, int maxWeight, List<Experiment> experiments) {
 	static Payload greedy(Comparator<Experiment> order, int maxWeight, List<Experiment> experiments) {
 		List<Experiment> sorted = new ArrayList<>(experiments);
@@ -43,68 +72,61 @@ public class Strategies {
 		
 		Payload payload = new Payload();
 		payload.addConstraints(exclusiveConstraint1, combinedSavings1, savings1, preReqConstraint1);
+		boolean massCreditApplied = false;
 		
-		int i;
-		int hold = 0;
-		for (i = 0; i < sorted.size(); i=i+1)
+//		int i;
+		for (int i = 0; i < sorted.size(); i=i+1)
 		{
 			Experiment e = sorted.get(i);
-			Payload speculativePayload = new Payload(payload);
-			speculativePayload.add(e);
-			speculativePayload.interactionEffects();
 			
-			if (speculativePayload.totalWeight <= maxWeight && speculativePayload.validPayload) {
-				payload.add(e);
-				payload.interactionEffects();
+			if(!payload.items.contains(e))
+			{
+				Payload speculativePayload = new Payload(payload);
+				speculativePayload.add(e);
+				speculativePayload.interactionEffects(massCreditApplied);
+				if(speculativePayload.massCredit)
+				{
+					Payload sPWithMassCredit = new Payload();
+					for(Experiment old : speculativePayload.items)
+					{
+						if(old != y)
+							sPWithMassCredit.add(old);
+						else
+						{
+							sPWithMassCredit.add(y2);
+							//massCreditApplied = true;
+							//We don't do this because this payload is speculative
+							//if the experiment is added below, then we do this
+						}
+					}
+					speculativePayload = sPWithMassCredit;
+				}
 				
-				//This condition triggers once massCredit can start being a factor.
-//				if(combinedSavings1.contains(e))
-//				{
-//					hold=i;
-//					i=sorted.size();
-//				}
+				if (speculativePayload.totalWeight <= maxWeight && speculativePayload.validPayload) {
+					payload.add(e);
+					
+					if(payload.massCredit)
+						massCreditApplied = true;
+					
+					i = 0;
+					payload.interactionEffects(massCreditApplied);
+					
+					if(!massCreditApplied)
+					{
+						if(e == combinedSavings1.getFirst())
+						{
+							sorted.remove(sorted.indexOf(y));
+							sorted.add(y2);
+							sorted.sort(order);
+							massCreditApplied = true;
+						}
+					}
+					
+					
+					
+				}
 			}
 		}
-		
-//		List<Payload> sortedWithMassCredit = new ArrayList<>();
-//		for(int j=hold; j<sorted.size(); j=j+1)
-//		{
-//			Experiment e = sorted.get(j);
-//			Payload speculativePayload = new Payload(payload);
-//			speculativePayload.add(e);
-//			speculativePayload.interactionEffects();
-//			
-//			if(speculativePayload.validPayload)
-//			{
-//				sortedWithMassCredit.add(speculativePayload);
-//			}
-//		}
-//		sortedWithMassCredit.sort(order2);
-		
-//		for (Experiment e : sorted) {
-//			Payload speculativePayload = new Payload(payload);
-//			speculativePayload.add(e);
-//			speculativePayload.interactionEffects();
-//			
-//			if (speculativePayload.totalWeight <= maxWeight && speculativePayload.validPayload) {
-//				payload.add(e);
-//			}
-//			else if(combinedSavings1.contains(e))
-//			{
-//				
-//				//TODO check the items don't have the same reference
-//				//and properties of both don't have the same reference
-//				speculativePayload.add(e);
-////				if(payload.items == speculativePayload.items)
-////					throw(new Exception("modifying payload before checks"));
-//				if(payload == speculativePayload)
-//					assertEquals(true, false);
-//				speculativePayload.interactionEffects();
-//				if (speculativePayload.totalWeight <= maxWeight && speculativePayload.validPayload) {
-//					payload.add(e);
-//				}
-//			}
-//		}
 		
 		return payload;
 	}
@@ -146,6 +168,7 @@ public class Strategies {
 		
 		// Buids every combination of n bits
 		for (int mask = 0; mask < totalPayloads; mask++) {
+			boolean massCreditApplied = false;
 			Payload p = new Payload();
 			p.addConstraints(exclusiveConstraint1, combinedSavings1, savings1, preReqConstraint1);
 			
@@ -156,7 +179,20 @@ public class Strategies {
 				}
 			}
 			
-			p.interactionEffects(); //if the payload is invalid or has a mass credit, this call will fix that
+			if(p.items.contains(combinedSavings1.getFirst()) && p.items.contains(combinedSavings1.getFirst()))
+			{
+				Payload pWithMassCredit = new Payload();
+				massCreditApplied = true;
+				
+				for (int bit = 0; bit < n; bit++) {
+					if ((mask & (1 << bit)) != 0) {
+						pWithMassCredit.add(experimentsWithMassCredit.get(bit));
+					}
+				}
+				p = pWithMassCredit;
+			}
+				
+			p.interactionEffects(massCreditApplied); //if the payload is invalid or has a mass credit, this call will fix that
 			
 			// Adds payload to list of valid payloads if its within maxWeight
 			// Check payload change request requirements here

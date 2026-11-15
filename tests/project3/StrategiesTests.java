@@ -124,20 +124,23 @@ class StrategiesTests {
 
 		Payload impossible = new Payload();
 		impossible.addConstraints(exclusiveConstraint1, null, 0, null);
+		boolean massCreditApplied = false;
 //		impossible.addexclusiveConstraint(exclusiveConstraint1);
 		impossible.add(new Experiment("Solar Flares", 264, 9));
 		impossible.add(new Experiment("Solar Power", 188, 6));
 		impossible.add(new Experiment("Sun Spots", 90, 2));
-		impossible.interactionEffects();
+		impossible.interactionEffects(massCreditApplied);
 		assertEquals(false, impossible.validPayload);
 	}
 
 	@Test
-	void testMassCredit() {
+	void testMassCreditFieldInPayload() {
 		ArrayList<Experiment> combinedSavings1 = new ArrayList<>(List.of(
 				new Experiment("Seed Viability", 7, 4),
 				new Experiment("Yeast Fermentation", 27, 4)));
 		int savings1 = 7;
+		
+		boolean massCreditApplied = false;
 
 		Payload efficientCombo = new Payload();
 		efficientCombo.add(new Experiment("Seed Viability", 7, 4));
@@ -146,7 +149,7 @@ class StrategiesTests {
 		assertEquals(34, efficientCombo.totalWeight);
 
 		efficientCombo.addConstraints(null, combinedSavings1, savings1, null);
-		efficientCombo.interactionEffects();
+		efficientCombo.interactionEffects(massCreditApplied);
 
 		assertEquals(27, efficientCombo.totalWeight);
 	}
@@ -155,32 +158,34 @@ class StrategiesTests {
 	void testPreReqConstraint() {
 		Experiment a = new Experiment("Cosmic Rays (Primary Band)", 80, 7);
 		Experiment b = new Experiment("Cosmic Rays (Secondary Band)", 10, 5);
+		
+		boolean massCreditApplied = false;
 
 		ArrayList<Experiment> preReqConstraint1 = new ArrayList<>(List.of(
 				a, b));
 
 		Payload payloadA = new Payload();
 		payloadA.addConstraints(null, null, 0, preReqConstraint1);
-		payloadA.interactionEffects();
+		payloadA.interactionEffects(massCreditApplied);
 		assertEquals(payloadA.validPayload, true);
 
 		payloadA.add(a);
-		payloadA.interactionEffects();
+		payloadA.interactionEffects(massCreditApplied);
 		assertEquals(payloadA.validPayload, true);
 
 		Payload payloadB = new Payload();
 		payloadB.addConstraints(null, null, 0, preReqConstraint1);
-		payloadB.interactionEffects();
+		payloadB.interactionEffects(massCreditApplied);
 		assertEquals(payloadB.validPayload, true);
 
 		payloadB.add(b);
-		payloadB.interactionEffects();
+		payloadB.interactionEffects(massCreditApplied);
 		assertEquals(false, payloadB.validPayload);
 
 		Payload payloadAAndB = new Payload();
 		payloadAAndB.add(a);
 		payloadAAndB.add(b);
-		payloadAAndB.interactionEffects();
+		payloadAAndB.interactionEffects(massCreditApplied);
 		assertEquals(payloadAAndB.validPayload, true);
 	}
 
@@ -188,22 +193,24 @@ class StrategiesTests {
 	void testChangingExperimentsChangesPayloadValidity() {
 		Experiment a = new Experiment("Cosmic Rays (Primary Band)", 80, 7);
 		Experiment b = new Experiment("Cosmic Rays (Secondary Band)", 10, 5);
+		
+		boolean massCreditApplied = false;
 
 		ArrayList<Experiment> preReqConstraint1 = new ArrayList<>(List.of(
 				a, b));
 
 		Payload p = new Payload();
 		p.addConstraints(null, null, 0, preReqConstraint1);
-		p.interactionEffects();
+		p.interactionEffects(massCreditApplied);
 		assertEquals(p.validPayload, true);
 
 		p.add(b);
-		p.interactionEffects();
+		p.interactionEffects(massCreditApplied);
 		assertEquals(p.validPayload, false);
 
 		p.add(a);
 		assertEquals(p.validPayload, false); // The checks have to be run again to update validPayload.
-		p.interactionEffects();
+		p.interactionEffects(massCreditApplied);
 		assertEquals(p.validPayload, true);
 	}
 
@@ -216,12 +223,14 @@ class StrategiesTests {
 	void testAllConstraintsNull() {
 		Experiment a = new Experiment("Cosmic Rays (Primary Band)", 80, 7);
 		Experiment b = new Experiment("Cosmic Rays (Secondary Band)", 10, 5);
+		
+		boolean massCreditApplied = false;
 
 		Payload payloadB = new Payload();
 		payloadB.addConstraints(null, null, 0, null);
 
 		payloadB.add(b);
-		payloadB.interactionEffects();
+		payloadB.interactionEffects(massCreditApplied);
 		//Calling this will cause errors if the constraints aren't checked to make sure they're not null
 		
 		assertEquals(payloadB.validPayload, true);

@@ -47,15 +47,15 @@ public class Payload {
 		this.items = new ArrayList<>(items); //changing the new object shouldn't change the old, so new list
 		this.totalWeight = totalWeight;
 		this.totalRating = totalRating;
-		//this.validPayload = validPayload;
-		//this is handled by interactionEffects below
+		this.validPayload = validPayload;
+		//this is not handled by interactionEffects below because massCredit is complex
 		this.exclusiveConstraint = exclusiveConstraint; // Linking the lists for constraints is fine
 		this.combinedSavings = combinedSavings;			// since the constraints are hardcoded.		
 		this.weightSavings = weightSavings;				// Set initially, never changed after.
 		this.preReqConstraint = preReqConstraint;
 		this.massCredit = massCredit;
 		
-		this.interactionEffects();
+//		this.interactionEffects();
 	}
 
 	public Payload(Payload old) {
@@ -63,15 +63,15 @@ public class Payload {
 		this.items = new ArrayList<>(old.items);
 		this.totalWeight = old.totalWeight;
 		this.totalRating = old.totalRating;
-		//this.validPayload = old.validPayload;
-		//this is handled by interactionEffects below
+		this.validPayload = old.validPayload;
+		//this is not handled by interactionEffects below because massCredit is complex
 		this.exclusiveConstraint = old.exclusiveConstraint;
 		this.combinedSavings = old.combinedSavings;
 		this.weightSavings = old.weightSavings;
 		this.preReqConstraint = old.preReqConstraint;
 		this.massCredit = old.massCredit;  //mass credit is copied, so payloads can't get weight saving twice
 		
-		this.interactionEffects();
+//		this.interactionEffects();
 	}
 
 	void add(Experiment e) {
@@ -93,14 +93,14 @@ public class Payload {
 		exclusiveConstraint = exclusiveConstraint1;
 	}
 
-	public void interactionEffects() {
+	public void interactionEffects(boolean massCreditApplied) {
 		validPayload = true;
 
 		if (exclusiveConstraint != null && !exclusiveConstraint.isEmpty())
 			checkExclusive();
 
 		if (combinedSavings != null && !combinedSavings.isEmpty() && weightSavings != 0)
-			checkCombined();
+			checkCombined(massCreditApplied);
 
 		if (preReqConstraint != null && !preReqConstraint.isEmpty())
 			checkPrereq();
@@ -116,7 +116,10 @@ public class Payload {
 		validPayload = false;
 	}
 
-	void checkCombined() {
+	void checkCombined(boolean massCreditApplied) {
+		
+		if(massCreditApplied)
+			return;
 		
 		if (massCredit)
 			return;
