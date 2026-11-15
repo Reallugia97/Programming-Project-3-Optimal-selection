@@ -36,6 +36,7 @@ public class Strategies {
 		return experiments;
 	}
 	
+//	static Payload greedy(Comparator<Experiment> order, Comparator<Payload> order2, int maxWeight, List<Experiment> experiments) {
 	static Payload greedy(Comparator<Experiment> order, int maxWeight, List<Experiment> experiments) {
 		List<Experiment> sorted = new ArrayList<>(experiments);
 		sorted.sort(order);
@@ -44,7 +45,7 @@ public class Strategies {
 		payload.addConstraints(exclusiveConstraint1, combinedSavings1, savings1, preReqConstraint1);
 		
 		int i;
-		int j;
+		int hold = 0;
 		for (i = 0; i < sorted.size(); i=i+1)
 		{
 			Experiment e = sorted.get(i);
@@ -56,15 +57,29 @@ public class Strategies {
 				payload.add(e);
 				payload.interactionEffects();
 				
-//				if(combinedSavings1.contains(e) && !payload.massCredit)
+				//This condition triggers once massCredit can start being a factor.
+//				if(combinedSavings1.contains(e))
 //				{
-//					j=i;
+//					hold=i;
 //					i=sorted.size();
 //				}
 			}
 		}
 		
-		
+//		List<Payload> sortedWithMassCredit = new ArrayList<>();
+//		for(int j=hold; j<sorted.size(); j=j+1)
+//		{
+//			Experiment e = sorted.get(j);
+//			Payload speculativePayload = new Payload(payload);
+//			speculativePayload.add(e);
+//			speculativePayload.interactionEffects();
+//			
+//			if(speculativePayload.validPayload)
+//			{
+//				sortedWithMassCredit.add(speculativePayload);
+//			}
+//		}
+//		sortedWithMassCredit.sort(order2);
 		
 //		for (Experiment e : sorted) {
 //			Payload speculativePayload = new Payload(payload);
@@ -95,17 +110,29 @@ public class Strategies {
 	}
 	
 	//comparingInt sorts ascending order, so for highest first it has to be reversed after
-	//thenComparing is for breaking ties using weight
+		//thenComparing is for breaking ties using weight
 	static Payload highestRatingFirst(int maxWeight) {		
-		return greedy(Comparator.comparingInt((Experiment e) -> e.rating).reversed().thenComparingInt(e -> e.weight), maxWeight, experiments);
+		return greedy(
+				Comparator.comparingInt((Experiment e) -> e.rating).reversed().thenComparingInt(e -> e.weight),
+//				Comparator.comparingInt((Payload p) -> p.totalRating).reversed().thenComparingInt(p -> p.totalWeight),
+				maxWeight,
+				experiments);
 	}
 	
 	static Payload lightestFirst(int maxWeight) {
-		return greedy(Comparator.comparingInt((Experiment e) -> e.weight).thenComparing(Comparator.comparingInt((Experiment e) -> e.rating).reversed()), maxWeight, experiments);
+		return greedy(
+				Comparator.comparingInt((Experiment e) -> e.weight).thenComparing(Comparator.comparingInt((Experiment e) -> e.rating).reversed()),
+//				Comparator.comparingInt((Payload p) -> p.totalWeight).thenComparing(Comparator.comparingInt((Payload p) -> p.totalRating).reversed()),
+				maxWeight,
+				experiments);
 	}
 	
 	static Payload highestRatioFirst(int maxWeight) {
-		return greedy(Comparator.comparingDouble(Experiment::ratio).reversed().thenComparingInt(e -> e.weight), maxWeight, experiments);
+		return greedy(
+				Comparator.comparingDouble(Experiment::ratio).reversed().thenComparingInt(e -> e.weight),
+//				Comparator.comparingDouble(Experiment::ratio).reversed().thenComparingInt(e -> e.weight),
+				maxWeight,
+				experiments);
 	}
 	
 	/**
