@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO
+ * 
  * 
  * @team_Name Rocket Escape
  * @team_Members BraydenBigelow, NathanJohnson
@@ -26,8 +26,8 @@ public class Payload {
 	List<Experiment> preReqConstraint = new ArrayList<>();
 	boolean massCredit = false;
 	// Once massCredit is true, the weightSavings are never realized again.
-	// In the sense that false is 0 and true is 1, massCredit is monotonically
-	// increasing.
+	// In the sense that false is 0 and true is 1,
+	// massCredit is monotonically increasing.
 
 	// This implementation supports ONE combinedSavings list.
 	// With more than one, weightSavings and massCredit would have to be lists,
@@ -36,10 +36,10 @@ public class Payload {
 	public Payload() {
 	}
 
-	//This constructor is here as a reference to be read. It is not used. 
-	//Instead experiments are added to the payload, and interactions are checked.
-	//Use with care. Normally totalRating is automatically updated as you add experiments to the payload.
-	//Likewise with totalWeight, except it also depends on you calling interactionEffects.
+	// This constructor is here as a reference to be read. It is not used. 
+	// Instead experiments are added to the payload, and interactions are checked.
+	// Use with care. Normally totalRating is automatically updated as you add experiments to the payload.
+	// Likewise with totalWeight, except it also depends on you calling interactionEffects.
 	public Payload(List<Experiment> items, int totalWeight, int totalRating, boolean validPayload,
 			List<Experiment> exclusiveConstraint,
 			List<Experiment> combinedSavings, int weightSavings, List<Experiment> preReqConstraint, boolean massCredit) {

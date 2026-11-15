@@ -7,7 +7,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * TODO
+ * 
  * 
  * @team_Name Rocket Escape
  * @team_Members BraydenBigelow, NathanJohnson
@@ -44,24 +44,28 @@ public class Strategies {
 		payload.addConstraints(exclusiveConstraint1, combinedSavings1, savings1, preReqConstraint1);
 		
 		for (Experiment e : sorted) {
-			if (payload.totalWeight + e.weight <= maxWeight && payload.validPayload) {
+			Payload speculativePayload = new Payload(payload);
+			speculativePayload.add(e);
+			speculativePayload.interactionEffects();
+			
+			if (speculativePayload.totalWeight <= maxWeight && speculativePayload.validPayload) {
 				payload.add(e);
 			}
-			else if(combinedSavings1.contains(e))
-			{
-				Payload speculativePayload = new Payload(payload);
-				//TODO check the items don't have the same reference
-				//and properties of both don't have the same reference
-				speculativePayload.add(e);
-//				if(payload.items == speculativePayload.items)
-//					throw(new Exception("modifying payload before checks"));
-				if(payload == speculativePayload)
-					assertEquals(true, false);
-				speculativePayload.interactionEffects();
-				if (speculativePayload.totalWeight <= maxWeight && speculativePayload.validPayload) {
-					payload.add(e);
-				}
-			}
+//			else if(combinedSavings1.contains(e))
+//			{
+//				
+//				//TODO check the items don't have the same reference
+//				//and properties of both don't have the same reference
+//				speculativePayload.add(e);
+////				if(payload.items == speculativePayload.items)
+////					throw(new Exception("modifying payload before checks"));
+//				if(payload == speculativePayload)
+//					assertEquals(true, false);
+//				speculativePayload.interactionEffects();
+//				if (speculativePayload.totalWeight <= maxWeight && speculativePayload.validPayload) {
+//					payload.add(e);
+//				}
+//			}
 		}
 		
 		return payload;
