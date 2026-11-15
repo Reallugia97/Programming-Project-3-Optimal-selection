@@ -87,6 +87,7 @@ public class Strategies {
 			Payload speculativePayload = new Payload(payload);
 			speculativePayload.add(e);
 			speculativePayload.interactionEffects(massCreditApplied);
+			
 			if(speculativePayload.massCredit)
 			{
 				Payload sPWithMassCredit = new Payload();
@@ -102,6 +103,8 @@ public class Strategies {
 						//if the experiment is added below, then we do this
 					}
 				}
+				sPWithMassCredit.checkExclusive();
+				sPWithMassCredit.checkPrereq();
 				speculativePayload = sPWithMassCredit;
 			}
 			

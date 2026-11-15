@@ -56,6 +56,8 @@ public class Payload {
 		this.massCredit = massCredit;
 		
 //		this.interactionEffects();
+		checkExclusive();
+		checkPrereq();
 	}
 
 	public Payload(Payload old) {
@@ -72,6 +74,8 @@ public class Payload {
 		this.massCredit = old.massCredit;  //mass credit is copied, so payloads can't get weight saving twice
 		
 //		this.interactionEffects();
+		checkExclusive();
+		checkPrereq();
 	}
 
 	void add(Experiment e) {
