@@ -133,7 +133,7 @@ public class Strategies {
 					{
 						sPWithMassCredit.add(y2);
 						// Normally we would set
-						//massCreditApplied = true;
+						// massCreditApplied = true;
 						// We don't do this because this payload is speculative
 						// Iff the experiment is added below, then we do this
 					}
@@ -229,7 +229,7 @@ public class Strategies {
 		int totalPayloads = 1 << n;
 		List<Payload> valid = new ArrayList<>();
 		
-		// Buids every combination of n bits
+		// Builds every combination of n bits
 		for (int mask = 0; mask < totalPayloads; mask++) {
 			boolean massCreditApplied = false;
 			Payload p = new Payload();
