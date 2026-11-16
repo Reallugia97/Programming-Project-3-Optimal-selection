@@ -131,9 +131,9 @@ public class Strategies {
 			}
 			
 			if (speculativePayload.totalWeight <= maxWeight && speculativePayload.validPayload) {
-				payload.add(e);
-				i = -1; // In order to not miss options that were blocked by constraints
-				// We go back to before the beginning after adding an experiment
+				payload.add(e); // After adding an experiment
+				i = -1; // in order to not miss options that were blocked by constraints
+				// we go back to before the beginning.
 				// Then at the end of the loop i is advanced to 0.
 				
 				if(payload.massCredit)
