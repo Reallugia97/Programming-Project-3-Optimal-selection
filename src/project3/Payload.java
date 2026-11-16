@@ -4,17 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
+ * Wraps a list of experiments to handle totalWeight, totalRating,
+ * constraints and mass credit.
  * 
  * @team_Name Rocket Escape
  * @team_Members BraydenBigelow, NathanJohnson
  * @course_and_Section CS-2430, section 001
  * @project_Name Programming Project 3 - Fall 2026
- * @author BraydenBigelow
- * Some constraints and constraint logic added by Nathan
- * 
- * Wraps a list of experiments to handle totalWeight, totalRating,
- * constraints and mass credit.
+ * @author BraydenBigelow and NathanJohnson
  */
 public class Payload {
 
@@ -38,7 +35,6 @@ public class Payload {
 	// and the associated checks would have to be positional.
 
 	/**
-	 * 
 	 * Creates an empty payload.
 	 * Make sure you immediately call //.interactionEffects(massCreditApplied);
 	 */
@@ -46,17 +42,6 @@ public class Payload {
 	}
 	
 	/**
-	 * 
-	 * @param items
-	 * @param totalWeight
-	 * @param totalRating
-	 * @param validPayload
-	 * @param exclusiveConstraint
-	 * @param combinedSavings
-	 * @param weightSavings
-	 * @param preReqConstraint
-	 * @param massCredit
-	 * 
 	 * Make sure you immediately call //.interactionEffects(massCreditApplied);
 	 * 
 	 * This constructor below was made as a reference while creating the constructor below it.
@@ -85,8 +70,6 @@ public class Payload {
 	}
 
 	/**
-	 * 
-	 * @param old
 	 * creates a new Payload with the same parameters as the old.
 	 * Make sure you immediately call //.interactionEffects(massCreditApplied);
 	 */
@@ -118,12 +101,6 @@ public class Payload {
 	}
 
 	/**
-	 * 
-	 * @param exclusiveConstraint1
-	 * @param combinedSavings1
-	 * @param savings1
-	 * @param preReqConstraint1
-	 * 
 	 * Adds all the constraints using the given constraints.
 	 * Also notes what weightSavings will be for if the payload qualifies
 	 */
@@ -137,8 +114,6 @@ public class Payload {
 	}
 
 	/**
-	 * 
-	 * @param massCreditApplied
 	 * checks constraints if they exist.
 	 * 
 	 * Checks if you can get that mass credit if it hasn't been applied already.
@@ -158,8 +133,7 @@ public class Payload {
 	}
 	
 	/**
-	 * 
-	 * checks payload validity against the existing constraints.
+	 * Checks payload validity against the existing constraints.
 	 * Does not check if there are weight savings from mass credit
 	 */
 	public void checkPayloadValidity() {
@@ -173,7 +147,6 @@ public class Payload {
 	}
 
 	/**
-	 * 
 	 * Checks the exclusive constraint:
 	 * updates validPayload to false if ALL experiments in exclusiveConstraint are present.
 	 */
@@ -188,8 +161,6 @@ public class Payload {
 	}
 
 	/**
-	 * 
-	 * @param massCreditApplied
 	 * If massCreditHasn't been applied (externally), run the internal check.
 	 * Does nothing if massCredit has been applied.
 	 */
@@ -212,7 +183,6 @@ public class Payload {
 	}
 
 	/**
-	 * 
 	 * Sets validPayload to false if the last element of a preReqConstraint is present, but not the first.
 	 */
 	void checkPrereq() {

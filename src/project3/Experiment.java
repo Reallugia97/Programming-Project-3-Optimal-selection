@@ -3,7 +3,7 @@ package project3;
 import java.util.Objects;
 
 /**
- * 
+ * Contains experiments and allows for comparing them. (Same parameters, same experiment.)
  * 
  * @team_Name Rocket Escape
  * @team_Members BraydenBigelow, NathanJohnson
@@ -11,8 +11,6 @@ import java.util.Objects;
  * @project_Name Programming Project 3 - Fall 2026
  * @author BraydenBigelow
  * Overrides added by Nathan
- * 
- * Contains experiments and allows for comparing them. (Same parameters, same experiment.)
  */
 public class Experiment {
 

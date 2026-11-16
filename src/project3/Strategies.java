@@ -4,17 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
- * 
- * 
- * @team_Name Rocket Escape
- * @team_Members BraydenBigelow, NathanJohnson
- * @course_and_Section CS-2430, section 001
- * @project_Name Programming Project 3 - Fall 2026
- * @authors BraydenBigelow, NathanJohnson
- * 
  * Strategies. Because the best payloads don't organically emerge
  * from a list of experiments and constraints on their own.
  * 
@@ -23,6 +13,12 @@ import static org.junit.jupiter.api.Assertions.*;
  * using a comparator that works on experiments.
  * 
  * With 3 built in greedy searches ready to go.
+ * 
+ * @team_Name Rocket Escape
+ * @team_Members BraydenBigelow, NathanJohnson
+ * @course_and_Section CS-2430, section 001
+ * @project_Name Programming Project 3 - Fall 2026
+ * @authors BraydenBigelow, NathanJohnson
  */
 public class Strategies {
 	
@@ -61,8 +57,6 @@ public class Strategies {
 	}
 	
 	/**
-	 * 
-	 * @param experiments
 	 * Creates Strategies from the given list.
 	 */
 	Strategies(List<Experiment> experiments) {
@@ -70,7 +64,6 @@ public class Strategies {
 	}
 	
 	/**
-	 * 
 	 * @returns the experiments
 	 */
 	public static List<Experiment> getExperiments()	{
@@ -78,7 +71,6 @@ public class Strategies {
 	}
 	
 	/**
-	 * 
 	 * @returns the experiments after the adjustment for mass credit
 	 */
 	public static List<Experiment> getExperimentsWithMassCredit()	{
@@ -86,10 +78,6 @@ public class Strategies {
 	}
 	
 	/**
-	 * 
-	 * @param order
-	 * @param maxWeight
-	 * @param experiments
 	 * @returns a payload assembled greedily (depth 1) based on the parameters.
 	 */
 	static Payload greedy(Comparator<Experiment> order, int maxWeight, List<Experiment> experiments) {
@@ -175,8 +163,7 @@ public class Strategies {
 		return payload;
 	}
 	
-	/*
-	 * 
+	/**
 	 * This uses greedy to get the highest rating first.
 	 * The comparator sorts by rating, then weight. 
 	 * 
@@ -191,13 +178,11 @@ public class Strategies {
 	}
 	
 	/**
-	 * 
-	 * @param maxWeight
-	 * @returns a payload assembled greedily: lightest experiment first.
-	 * 
 	 * The comparator sorts by lightest, then rating. 
 	 * .reversed is used after sorting by rating
 	 * to get highest rating first for breaking ties 
+	 * 
+	 * @returns a payload assembled greedily: lightest experiment first.
 	 */
 	static Payload lightestFirst(int maxWeight) {
 		return greedy(
@@ -207,10 +192,9 @@ public class Strategies {
 	}
 	
 	/**
-	 * 
-	 * @param maxWeight
-	 * @returns payload assembled greedily: highest ratio first.
 	 * The comparator sorts by ratio (descending order), then breaks ties with weight (ascending order).
+	 * 
+	 * @returns payload assembled greedily: highest ratio first.
 	 */
 	static Payload highestRatioFirst(int maxWeight) {
 		return greedy(
@@ -220,8 +204,6 @@ public class Strategies {
 	}
 	
 	/**
-	 * 
-	 * @param maxWeight
 	 * @returns a list of the 2^n possible payloads that are valid and within the maxWeight limit.
 	 */
 	static List<Payload> bruteForce(int maxWeight) {
@@ -267,8 +249,7 @@ public class Strategies {
 		return valid;
 	}
 	
-	/*
-	 * 
+	/** 
 	 * Prints the given payload.
 	 */
 	static void printPayload(Payload p) {
@@ -281,8 +262,7 @@ public class Strategies {
 		System.out.printf("Total weight: %d%nTotal Rating: %d%n%n", p.totalWeight, p.totalRating);
 	}
 	
-	/*
-	 * 
+	/** 
 	 * Prints the top 3 items from the given list of payloads.
 	 */
 	static void printTopThree(List<Payload> payload) {
@@ -295,8 +275,7 @@ public class Strategies {
 		}
 	}
 	
-	/*
-	 * 
+	/** 
 	 * Prints a line with a series of dashes of the given length.
 	 */
 	static void printDashes(int length) {
