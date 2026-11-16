@@ -24,15 +24,24 @@
 
 3. **Navigate to project3 package**
 
-4. **Run _____________**
+4. **Run Strategies.java**
 
 # Project Structure:
 
 ### docs/proj_3_plan
    - Records roles, tasks, deadlines, and progress.
 
-### src/project3/GreedyStrategies
+### docs/UML
+   - Contains the UML documentation for the project
+
+### docs/Pseudocode
+   - Contains the pseudocode for the project, including pseudocode on a dynamic programming version.
+
+### docs/Report
+   - Contains the project report viewable as a PDF
+
+### src/project3/Strategies
    - Contains the 3 strategies for part 1
 
-### tests/project3/GreedyStrategiesTests
+### tests/project3/StrategiesTests
    - Contains JUnit tests for class GreedyStrategies
