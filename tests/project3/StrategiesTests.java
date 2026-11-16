@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 /**
- * TODO (explanation goes here)
+ * JUnit test class for class Strategies
  * 
  * @team_Name Rocket Escape
  * @team_Members BraydenBigelow, NathanJohnson

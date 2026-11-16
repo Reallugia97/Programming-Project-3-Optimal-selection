@@ -258,12 +258,12 @@ public class Strategies {
 	 * Prints the given payload.
 	 */
 	static void printPayload(Payload p) {
-		printDashes(45);
-		System.out.printf("%-25s %5s %8s%n%n", "Experiment", "Weight", "Rating");
+		printDashes(46);
+		System.out.printf("%-30s %3s %8s%n%n", "Experiment", "Weight", "Rating");
 		for (Experiment e : p.items) {
-			System.out.printf("%-25s %5d %8d%n", e.name, e.weight, e.rating);
+			System.out.printf("%-30s %3d %8d%n", e.name, e.weight, e.rating);
 		}
-		printDashes(45);
+		printDashes(46);
 		System.out.printf("Total weight: %d%nTotal Rating: %d%n%n", p.totalWeight, p.totalRating);
 	}
 	
@@ -320,17 +320,17 @@ public class Strategies {
 		
 		System.out.println("Greedy Strategies: \n");
 		
-		printDashes(45);
+		printDashes(46);
 		System.out.println("Highest Rating First: \n");
 		Payload rating = highestRatingFirst(limit);
 		printPayload(rating);
 		
-		printDashes(45);
+		printDashes(46);
 		System.out.println("Lowest Weight First: \n");
 		Payload weight = lightestFirst(limit);
 		printPayload(weight);
 		
-		printDashes(45);
+		printDashes(46);
 		System.out.println("Best Ratio First: \n");
 		Payload ratio = highestRatioFirst(limit);
 		printPayload(ratio);
