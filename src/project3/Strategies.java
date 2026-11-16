@@ -33,7 +33,7 @@ public class Strategies {
 	// You're going to need one of these: //boolean massCreditApplied = false; 
 	
 	// Nathan's concessions to hard coding.
-	// Everything changed when the change request hit.
+	// Everything changed when the change order hit.
 	static Experiment y = new Experiment("Yeast Fermentation", 27, 4);
 	static Experiment y2 = new Experiment("Yeast Fermentation", 20, 4);
 	private static List<Experiment> experimentsWithMassCredit = List.of(
