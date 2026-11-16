@@ -141,7 +141,7 @@ public class Strategies {
 						int indexOfMissed = sorted.indexOf(preReqConstraint1.getFirst());
 						if(indexOfMissed < i)
 						{
-							i = indexOfMissed;
+							i = indexOfMissed - 1;
 						}
 					}
 				}
