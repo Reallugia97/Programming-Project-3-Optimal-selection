@@ -57,10 +57,14 @@ public class Payload {
 		this.preReqConstraint = preReqConstraint;
 		this.massCredit = massCredit;
 		
-//		this.interactionEffects();
-		checkPayloadValidity();
+		checkPayloadValidity(); //replaces the obligatory call to //this.interactionEffects();
 	}
 
+	/**
+	 * 
+	 * @param old
+	 * creates a new Payload with the same parameters as the old.
+	 */
 	public Payload(Payload old) {
 		super();
 		this.items = new ArrayList<>(old.items);
@@ -74,14 +78,15 @@ public class Payload {
 		this.preReqConstraint = old.preReqConstraint;
 		this.massCredit = old.massCredit;  //mass credit is copied, so payloads can't get weight saving twice
 		
-//		this.interactionEffects();
-		checkPayloadValidity();
+		checkPayloadValidity(); //replaces the obligatory call to //this.interactionEffects();
 	}
 
 	void add(Experiment e) {
 		items.add(e);
 		totalWeight += e.weight;
 		totalRating += e.rating;
+		
+		checkPayloadValidity();
 	}
 
 	public void addConstraints(List<Experiment> exclusiveConstraint1,

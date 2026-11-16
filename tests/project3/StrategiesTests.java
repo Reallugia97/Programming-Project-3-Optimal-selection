@@ -210,8 +210,10 @@ class StrategiesTests {
 		assertEquals(p.validPayload, false);
 
 		p.add(a);
-		assertEquals(p.validPayload, false); // The checks have to be run again to update validPayload.
-		p.interactionEffects(massCreditApplied);
+		// assertEquals(p.validPayload, false);
+		// The constraint checks are automatically run.
+		assertEquals(p.validPayload, true);
+		p.interactionEffects(massCreditApplied); //but you should run all the check just to be safe
 		assertEquals(p.validPayload, true);
 	}
 

@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @team_Members BraydenBigelow, NathanJohnson
  * @course_and_Section CS-2430, section 001
  * @project_Name Programming Project 3 - Fall 2026
- * @author BraydenBigelow, NathanJohnson
+ * @authors BraydenBigelow, NathanJohnson
  */
 public class Strategies {
 	
