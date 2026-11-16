@@ -41,7 +41,8 @@
    - Contains the project report viewable as a PDF
 
 ### src/project3/Strategies
-   - Contains the 3 strategies for part 1
+   - Contains the greedy and brute force implementations
+   - Contains the main method with each method's output
 
 ### tests/project3/StrategiesTests
-   - Contains JUnit tests for class GreedyStrategies
+   - Contains JUnit tests for class Strategies
