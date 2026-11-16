@@ -91,6 +91,7 @@ public class Strategies {
 			if(speculativePayload.massCredit)
 			{
 				Payload sPWithMassCredit = new Payload();
+				sPWithMassCredit.addConstraints(exclusiveConstraint1, combinedSavings1, savings1, preReqConstraint1);
 				for(Experiment old : speculativePayload.items)
 				{
 					if(old != y)
@@ -184,6 +185,7 @@ public class Strategies {
 			if(p.items.contains(combinedSavings1.getFirst()) && p.items.contains(combinedSavings1.getFirst()))
 			{
 				Payload pWithMassCredit = new Payload();
+				pWithMassCredit.addConstraints(exclusiveConstraint1, combinedSavings1, savings1, preReqConstraint1);
 				massCreditApplied = true;
 				
 				for (int bit = 0; bit < n; bit++) {
