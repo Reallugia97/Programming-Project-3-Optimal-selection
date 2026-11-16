@@ -95,7 +95,7 @@ public class Strategies {
 			
 			// This is so we don't add items more than once.
 			if(payload.items.contains(e))
-				continue;
+				continue; //hence 'todo list style'
 			
 			// Redundancy for catching if there's an old version of the Yeast experiment
 			// after massCredit is applied.
@@ -108,7 +108,7 @@ public class Strategies {
 			
 			// This check is for handling mass credit
 			// if we stumble into adding the Yeast experiment
-			// followed by Seed viabilty experiment.
+			// followed by the Seed viabilty experiment.
 			if(speculativePayload.massCredit)
 			{
 				Payload sPWithMassCredit = new Payload();
