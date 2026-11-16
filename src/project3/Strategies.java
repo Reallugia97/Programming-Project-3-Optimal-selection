@@ -132,9 +132,22 @@ public class Strategies {
 			
 			if (speculativePayload.totalWeight <= maxWeight && speculativePayload.validPayload) {
 				payload.add(e); // After adding an experiment
-				i = -1; // in order to not miss options that were blocked by constraints
+//				i = -1; // in order to not miss options that were blocked by constraints
 				// we go back to before the beginning.
 				// Then at the end of the loop i is advanced to 0.
+				
+				if(preReqConstraint1 != null && preReqConstraint1.size() == 2)
+				{
+					Experiment missed = preReqConstraint1.getFirst();
+					if(e.equals(missed))
+					{
+						int indexOfMissed = sorted.indexOf(preReqConstraint1.getFirst());
+						if(indexOfMissed < i)
+						{
+							i = indexOfMissed;
+						}
+					}
+				}
 				
 				if(payload.massCredit)
 					massCreditApplied = true;
