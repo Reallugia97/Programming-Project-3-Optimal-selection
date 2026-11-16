@@ -11,6 +11,7 @@ import java.util.List;
  * @course_and_Section CS-2430, section 001
  * @project_Name Programming Project 3 - Fall 2026
  * @author BraydenBigelow
+ * Some constraints and constraint logic added by Nathan
  */
 public class Payload {
 
