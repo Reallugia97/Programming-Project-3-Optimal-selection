@@ -274,7 +274,7 @@ public class Strategies {
 		List<Payload> sorted = new ArrayList<>(payload);
 		sorted.sort(Comparator.comparingInt((Payload p) -> p.totalRating).reversed().thenComparingInt(p -> p.totalWeight));
 		for(int i = 0; i < Math.min(3, sorted.size()); i++) {
-				printDashes(45);
+				printDashes(46);
 				System.out.printf("Brute Force #%d Solution: %n%n", (i + 1));
 				printPayload(sorted.get(i));
 		}
