@@ -12,6 +12,9 @@ import java.util.List;
  * @project_Name Programming Project 3 - Fall 2026
  * @author BraydenBigelow
  * Some constraints and constraint logic added by Nathan
+ * 
+ * Wraps a list of experiments to handle totalWeight, totalRating,
+ * constraints and mass credit.
  */
 public class Payload {
 

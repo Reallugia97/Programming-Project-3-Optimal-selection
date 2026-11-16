@@ -14,10 +14,32 @@ import static org.junit.jupiter.api.Assertions.*;
  * @course_and_Section CS-2430, section 001
  * @project_Name Programming Project 3 - Fall 2026
  * @authors BraydenBigelow, NathanJohnson
+ * 
+ * Strategies. Because the best payloads don't organically emerge
+ * from a list of experiments and constraints on their own.
+ * 
+ * Supports getting the top 3 from brute force search
+ * as well as greedy (1 step) search to make a payload
+ * using a comparator that works on experiments.
+ * 
+ * With 3 built in greedy searches ready to go.
  */
 public class Strategies {
 	
 	private static List<Experiment> experiments;
+	
+	
+	private static ArrayList<Experiment> exclusiveConstraint1  = new ArrayList<>();
+	private static ArrayList<Experiment> combinedSavings1  = new ArrayList<>();
+	private static int savings1;
+	private static ArrayList<Experiment> preReqConstraint1  = new ArrayList<>();
+	// In every context where you're initializing and using the constraints above
+	// You're going to need one of these: //boolean massCreditApplied = false; 
+	
+	// Nathan's concessions to hard coding.
+	// Everything changed when the change request hit.
+	static Experiment y = new Experiment("Yeast Fermentation", 27, 4);
+	static Experiment y2 = new Experiment("Yeast Fermentation", 20, 4);
 	private static List<Experiment> experimentsWithMassCredit = List.of(
 			new Experiment("Cloud Patterns", 36, 5),
 			new Experiment("Solar Flares", 264, 9),
@@ -33,17 +55,6 @@ public class Strategies {
 			new Experiment("Cosmic Rays (Secondary Band)", 10, 5),
 			new Experiment("Yeast Fermentation", 20, 4)
 	);
-	
-	private static ArrayList<Experiment> exclusiveConstraint1  = new ArrayList<>();
-	private static ArrayList<Experiment> combinedSavings1  = new ArrayList<>();
-//	private static ArrayList<Experiment> combinedSavings1  = new ArrayList<>(List.of(
-//			new Experiment("Seed Viability", 7, 4),
-//			new Experiment("Yeast Fermentation", 27, 4)));
-	private static int savings1;
-	private static ArrayList<Experiment> preReqConstraint1  = new ArrayList<>();
-//	private static boolean massCreditApplied = false;
-	static Experiment y = new Experiment("Yeast Fermentation", 27, 4);
-	static Experiment y2 = new Experiment("Yeast Fermentation", 20, 4);
 	
 	Strategies() {
 		
