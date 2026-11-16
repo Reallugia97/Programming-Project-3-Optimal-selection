@@ -84,7 +84,7 @@ public class Strategies {
 			if(payload.items.contains(e))
 				continue;
 			
-			if(massCreditApplied && e == y)
+			if(massCreditApplied && e.equals(y))
 				continue;
 			
 			Payload speculativePayload = new Payload(payload);
@@ -97,7 +97,7 @@ public class Strategies {
 				sPWithMassCredit.addConstraints(exclusiveConstraint1, combinedSavings1, savings1, preReqConstraint1);
 				for(Experiment old : speculativePayload.items)
 				{
-					if(old != y)
+					if(!old.equals(y))
 						sPWithMassCredit.add(old);
 					else
 					{
@@ -117,12 +117,12 @@ public class Strategies {
 				if(payload.massCredit)
 					massCreditApplied = true;
 				
-				i = 0;
+				i = -1;
 				payload.interactionEffects(massCreditApplied);
 				
 				if(!massCreditApplied && combinedSavings1 != null && !combinedSavings1.isEmpty())
 				{
-					if(e == combinedSavings1.getFirst())
+					if(e.equals(combinedSavings1.getFirst()) && sorted.contains(y) && !payload.items.contains(y))
 					{
 						sorted.remove(sorted.indexOf(y));
 						sorted.add(y2);
@@ -181,7 +181,7 @@ public class Strategies {
 				}
 			}
 			
-			if(p.items.contains(combinedSavings1.getFirst()) && p.items.contains(combinedSavings1.getFirst()))
+			if(!combinedSavings1.isEmpty() && p.items.contains(combinedSavings1.getFirst()) && p.items.contains(combinedSavings1.getLast()))
 			{
 				Payload pWithMassCredit = new Payload();
 				pWithMassCredit.addConstraints(exclusiveConstraint1, combinedSavings1, savings1, preReqConstraint1);
