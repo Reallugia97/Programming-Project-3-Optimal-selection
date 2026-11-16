@@ -33,15 +33,35 @@ public class Payload {
 	// With more than one, weightSavings and massCredit would have to be lists,
 	// and the associated checks would have to be positional.
 
+	/**
+	 * 
+	 * Creates an empty payload.
+	 * Make sure you immediately call //.interactionEffects(massCreditApplied);
+	 */
 	public Payload() {
 	}
-
-	// This constructor below was made as a reference while creating the constructor below it.
-	// It is not used. 
-	// Instead payloads are created as copies (see constructor below this one) 
-	// or created empty.
-	// Then experiments are added to the payload, and interactions are checked.
-	// If you decide to use this constructor, be careful.
+	
+	/**
+	 * 
+	 * @param items
+	 * @param totalWeight
+	 * @param totalRating
+	 * @param validPayload
+	 * @param exclusiveConstraint
+	 * @param combinedSavings
+	 * @param weightSavings
+	 * @param preReqConstraint
+	 * @param massCredit
+	 * 
+	 * Make sure you immediately call //.interactionEffects(massCreditApplied);
+	 * 
+	 * This constructor below was made as a reference while creating the constructor below it.
+	 * It is not used.
+	 * Instead payloads are created as copies (see constructor below this one)
+	 * or created empty.
+	 * Then experiments are added to the payload, and interactions are checked.
+	 * If you decide to use this constructor, be careful.
+	 */
 	public Payload(List<Experiment> items, int totalWeight, int totalRating, boolean validPayload,
 			List<Experiment> exclusiveConstraint,
 			List<Experiment> combinedSavings, int weightSavings, List<Experiment> preReqConstraint, boolean massCredit) {
@@ -64,6 +84,7 @@ public class Payload {
 	 * 
 	 * @param old
 	 * creates a new Payload with the same parameters as the old.
+	 * Make sure you immediately call //.interactionEffects(massCreditApplied);
 	 */
 	public Payload(Payload old) {
 		super();
@@ -87,8 +108,21 @@ public class Payload {
 		totalRating += e.rating;
 		
 		checkPayloadValidity();
+		//If you want to know if you're always calling interactionEffects
+		// on a payload right after you change it
+		// You can comment this out and see if anything breaks
 	}
 
+	/**
+	 * 
+	 * @param exclusiveConstraint1
+	 * @param combinedSavings1
+	 * @param savings1
+	 * @param preReqConstraint1
+	 * 
+	 * Adds all the constraints using the given constraints.
+	 * Also notes what weightSavings will be for if the payload qualifies
+	 */
 	public void addConstraints(List<Experiment> exclusiveConstraint1,
 			List<Experiment> combinedSavings1, int savings1,
 			List<Experiment> preReqConstraint1) {
@@ -98,10 +132,14 @@ public class Payload {
 		preReqConstraint = preReqConstraint1;
 	}
 
-	public void addexclusiveConstraint(List<Experiment> exclusiveConstraint1) {
-		exclusiveConstraint = exclusiveConstraint1;
-	}
-
+	/**
+	 * 
+	 * @param massCreditApplied
+	 * checks constraints if they exist.
+	 * 
+	 * Checks if you can get that mass credit if it hasn't been applied already.
+	 * Call every time you create or change a payload.
+	 */
 	public void interactionEffects(boolean massCreditApplied) {
 		validPayload = true;
 
@@ -115,17 +153,26 @@ public class Payload {
 			checkPrereq();
 	}
 	
-	public void checkPayloadValidity()
-	{
+	/**
+	 * 
+	 * checks payload validity against the existing constraints.
+	 * Does not check if there are weight savings from mass credit
+	 */
+	public void checkPayloadValidity() {
 		validPayload = true;
-		
+
 		if (exclusiveConstraint != null && !exclusiveConstraint.isEmpty())
 			checkExclusive();
-		
+
 		if (preReqConstraint != null && !preReqConstraint.isEmpty())
 			checkPrereq();
 	}
 
+	/**
+	 * 
+	 * Checks the exclusive constraint:
+	 * updates validPayload to false if ALL experiments in exclusiveConstraint are present.
+	 */
 	void checkExclusive() {
 
 		for (Experiment item : exclusiveConstraint) {
@@ -136,6 +183,12 @@ public class Payload {
 		validPayload = false;
 	}
 
+	/**
+	 * 
+	 * @param massCreditApplied
+	 * If massCreditHasn't been applied (externally), run the internal check.
+	 * Does nothing if massCredit has been applied.
+	 */
 	void checkCombined(boolean massCreditApplied) {
 		
 		if(massCreditApplied)
@@ -144,12 +197,20 @@ public class Payload {
 		if (massCredit)
 			return;
 
+		// If the Yeast Experiment is added, then Seed Viabilty
+		// this fixes the total payload weight and sets (internal) massCredit to true.
+		// There's logic in strategies that handles fixing the weight of the Yeast Experiment retroatively
+		// which fires if massCredit is true.
 		if (items.contains(combinedSavings.getFirst()) && items.contains(combinedSavings.getLast())) {
 			totalWeight -= weightSavings;
 			massCredit = true;
 		}
 	}
 
+	/**
+	 * 
+	 * Sets validPayload to false if the last element of a preReqConstraint is present, but not the first.
+	 */
 	void checkPrereq() {
 		if (items.contains(preReqConstraint.getLast()) && !items.contains(preReqConstraint.getFirst()))
 			validPayload = false;
