@@ -354,6 +354,11 @@ public class Strategies {
 	/*
 	 * Pseudo code for dynamic programming solution:
 	 * 
+	 * Note, I would do the stuff below by copying the existing code from greedy,
+	 * and modifying it into the stuff below,
+	 * so it would keep the handling of the constraints
+	 * and mass credit from the change request.
+	 * 
 	 * Dynamic Programming
 
     //Basically Dynamic Programming is breaking the problem down into smaller pieces with the same structure. There are two ways to do this for the knapsack problem: the amount of weight, and the number of items that can be included (once).
