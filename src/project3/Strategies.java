@@ -242,6 +242,9 @@ public class Strategies {
 				}
 			}
 			
+			// If the requirements are met for the mass credit
+			// this creates a new payload with the appropriate experiments
+			// including the Yeast experiment with the new weight
 			if(!combinedSavings1.isEmpty() && p.items.contains(combinedSavings1.getFirst()) && p.items.contains(combinedSavings1.getLast()))
 			{
 				Payload pWithMassCredit = new Payload();
@@ -253,12 +256,13 @@ public class Strategies {
 						pWithMassCredit.add(experimentsWithMassCredit.get(bit));
 					}
 				}
+				pWithMassCredit.interactionEffects(massCreditApplied);
 				p = pWithMassCredit;
 			}
 				
-			p.interactionEffects(massCreditApplied); //if the payload is invalid or has a mass credit, this call will fix that
+			p.interactionEffects(massCreditApplied); //Making sure the payload isn't invalid
 			
-			// Adds payload to list of valid payloads if its within maxWeight
+			// Adds payload to list of valid payloads if it's within maxWeight
 			// Check payload change request requirements here
 			if (p.totalWeight <= maxWeight && p.validPayload) {
 				valid.add(p);
