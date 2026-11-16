@@ -132,19 +132,21 @@ public class Strategies {
 			
 			if (speculativePayload.totalWeight <= maxWeight && speculativePayload.validPayload) {
 				payload.add(e);
+				i = -1;
 				
-				if(preReqConstraint1 != null && preReqConstraint1.size() == 2)
-				{
-					Experiment missed = preReqConstraint1.getFirst();
-					if(e.equals(missed))
-					{
-						int indexOfMissed = sorted.indexOf(preReqConstraint1.getFirst());
-						if(indexOfMissed < i)
-						{
-							i = indexOfMissed - 1;
-						}
-					}
-				}
+//				if(preReqConstraint1 != null && preReqConstraint1.size() == 2)
+//				{
+//					Experiment missed = preReqConstraint1.getFirst();
+//					if(e.equals(missed))
+//					{
+//						int indexOfMissed = sorted.indexOf(preReqConstraint1.getFirst());
+//						if(indexOfMissed < i)
+//						{
+//							//i = indexOfMissed - 1;
+////							i = -1;
+//						}
+//					}
+//				}
 				
 				if(payload.massCredit)
 					massCreditApplied = true;
