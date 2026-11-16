@@ -36,6 +36,9 @@ public class Strategies {
 	
 	private static ArrayList<Experiment> exclusiveConstraint1  = new ArrayList<>();
 	private static ArrayList<Experiment> combinedSavings1  = new ArrayList<>();
+//	private static ArrayList<Experiment> combinedSavings1  = new ArrayList<>(List.of(
+//			new Experiment("Seed Viability", 7, 4),
+//			new Experiment("Yeast Fermentation", 27, 4)));
 	private static int savings1;
 	private static ArrayList<Experiment> preReqConstraint1  = new ArrayList<>();
 //	private static boolean massCreditApplied = false;
@@ -104,8 +107,7 @@ public class Strategies {
 						//if the experiment is added below, then we do this
 					}
 				}
-				sPWithMassCredit.checkExclusive();
-				sPWithMassCredit.checkPrereq();
+				sPWithMassCredit.checkPayloadValidity();
 				speculativePayload = sPWithMassCredit;
 			}
 			
@@ -118,7 +120,7 @@ public class Strategies {
 				i = 0;
 				payload.interactionEffects(massCreditApplied);
 				
-				if(!massCreditApplied)
+				if(!massCreditApplied && combinedSavings1 != null && !combinedSavings1.isEmpty())
 				{
 					if(e == combinedSavings1.getFirst())
 					{
@@ -139,7 +141,6 @@ public class Strategies {
 	static Payload highestRatingFirst(int maxWeight) {		
 		return greedy(
 				Comparator.comparingInt((Experiment e) -> e.rating).reversed().thenComparingInt(e -> e.weight),
-//				Comparator.comparingInt((Payload p) -> p.totalRating).reversed().thenComparingInt(p -> p.totalWeight),
 				maxWeight,
 				experiments);
 	}
@@ -147,7 +148,6 @@ public class Strategies {
 	static Payload lightestFirst(int maxWeight) {
 		return greedy(
 				Comparator.comparingInt((Experiment e) -> e.weight).thenComparing(Comparator.comparingInt((Experiment e) -> e.rating).reversed()),
-//				Comparator.comparingInt((Payload p) -> p.totalWeight).thenComparing(Comparator.comparingInt((Payload p) -> p.totalRating).reversed()),
 				maxWeight,
 				experiments);
 	}
@@ -155,7 +155,6 @@ public class Strategies {
 	static Payload highestRatioFirst(int maxWeight) {
 		return greedy(
 				Comparator.comparingDouble(Experiment::ratio).reversed().thenComparingInt(e -> e.weight),
-//				Comparator.comparingDouble(Experiment::ratio).reversed().thenComparingInt(e -> e.weight),
 				maxWeight,
 				experiments);
 	}
@@ -250,7 +249,7 @@ public class Strategies {
 				));
 		int limit = 700;
 		
-		ArrayList<Experiment> exclusiveConstraint1 = new ArrayList<>(List.of(
+		exclusiveConstraint1 = new ArrayList<>(List.of(
 				new Experiment("Solar Flares", 264, 9), 
 				new Experiment("Solar Power", 188, 6), 
 				new Experiment("Sun Spots", 90, 2)));

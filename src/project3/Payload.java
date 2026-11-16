@@ -58,8 +58,7 @@ public class Payload {
 		this.massCredit = massCredit;
 		
 //		this.interactionEffects();
-		checkExclusive();
-		checkPrereq();
+		checkPayloadValidity();
 	}
 
 	public Payload(Payload old) {
@@ -76,8 +75,7 @@ public class Payload {
 		this.massCredit = old.massCredit;  //mass credit is copied, so payloads can't get weight saving twice
 		
 //		this.interactionEffects();
-		checkExclusive();
-		checkPrereq();
+		checkPayloadValidity();
 	}
 
 	void add(Experiment e) {
@@ -108,6 +106,17 @@ public class Payload {
 		if (combinedSavings != null && !combinedSavings.isEmpty() && weightSavings != 0)
 			checkCombined(massCreditApplied);
 
+		if (preReqConstraint != null && !preReqConstraint.isEmpty())
+			checkPrereq();
+	}
+	
+	public void checkPayloadValidity()
+	{
+		validPayload = true;
+		
+		if (exclusiveConstraint != null && !exclusiveConstraint.isEmpty())
+			checkExclusive();
+		
 		if (preReqConstraint != null && !preReqConstraint.isEmpty())
 			checkPrereq();
 	}

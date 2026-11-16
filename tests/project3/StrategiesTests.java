@@ -56,6 +56,7 @@ class StrategiesTests {
 		Payload small = new Payload();
 		small.add(new Experiment("baz", 5, 3));
 //		assertEquals(s.highestRatioFirst(6).items.getFirst().name, small.items.getFirst().name);
+		s.highestRatioFirst(6);
 		assertEquals(s.highestRatioFirst(6).items.getFirst(), small.items.getFirst());
 	}
 
