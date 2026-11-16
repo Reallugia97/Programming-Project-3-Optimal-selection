@@ -155,6 +155,10 @@ class StrategiesTests {
 		assertEquals(27, efficientCombo.totalWeight);
 	}
 
+	/**
+	 * 
+	 * Tests the preReqConstraint
+	 */
 	@Test
 	void testPreReqConstraint() {
 		Experiment a = new Experiment("Cosmic Rays (Primary Band)", 80, 7);
@@ -211,17 +215,22 @@ class StrategiesTests {
 
 		p.add(a);
 		// assertEquals(p.validPayload, false);
-		// The constraint checks are automatically run.
+		// The constraint checks are automatically run when you add an experiment.
 		assertEquals(p.validPayload, true);
-		p.interactionEffects(massCreditApplied); //but you should run all the check just to be safe
-		assertEquals(p.validPayload, true);
+		p.interactionEffects(massCreditApplied); // But you should run all the checks just to be safe
+		assertEquals(p.validPayload, true); 	// 	including the mass credit check.
 	}
 
-	// the above tests pass null for the two constraints not being tested (and 0 for
-	// the int if not used)
-	// interactionEffects calls the methods for all of the 3 which are not null and
-	// not empty
-	// the test below passes null for all 3
+	// 
+	
+	/**
+	 * 
+	 * the above tests pass null for the two constraints not being tested (and 0 for
+	 * the int if not used)
+	 * interactionEffects calls the methods for all of the 3 which are not null and
+	 * not empty
+	 * the test below passes null for all 3
+	 */
 	@Test
 	void testAllConstraintsNull() {
 		Experiment a = new Experiment("Cosmic Rays (Primary Band)", 80, 7);
@@ -234,21 +243,27 @@ class StrategiesTests {
 
 		payloadB.add(b);
 		payloadB.interactionEffects(massCreditApplied);
-		//Calling this will cause errors if the constraints aren't checked to make sure they're not null
+		// Calling this will cause errors if the constraints aren't checked to make sure they're not null
 		
 		assertEquals(payloadB.validPayload, true);
-		//if the constraints aren't added this is a valid payload
+		// If the constraints aren't added this is a valid payload
 	}
-
-	// if this test fails, modify Experiment constructors, .equals, and hashCode
+	
+	/**
+	 * 
+	 * If this test fails, modify Experiment constructors, .equals, and hashCode
 	// BEFORE incrementing
+	 */
 	@Test
 	void testNumOfExperimentParameters() {
 		Experiment e = new Experiment("Cosmic Rays (Primary Band)", 80, 7);
 		assertEquals(3, e.getClass().getDeclaredFields().length);
 	}
 
-	// if this test fails, modify Payload constructors BEFORE incrementing
+	/**
+	 * 
+	 * If this test fails, modify Payload constructors BEFORE incrementing
+	 */
 	@Test
 	void testNumOfObjectParameters() {
 		Payload p = new Payload();
