@@ -49,29 +49,42 @@ public class Strategies {
 		
 	}
 	
+	/**
+	 * 
+	 * @param experiments
+	 * Creates Strategies from the given list.
+	 */
 	Strategies(List<Experiment> experiments) {
 		Strategies.experiments = experiments;
 	}
 	
+	/**
+	 * 
+	 * @returns the experiments
+	 */
 	public static List<Experiment> getExperiments()	{
 		return experiments;
 	}
 	
-//	private void checkMassCredit(Payload p)
-//	{
-//		if(massCreditApplied)
-//			return;
-//		
-//		if(p.items.contains(combinedSavings1.getFirst()))
-//		{
-//			
-//		}
-//	}
+	/**
+	 * 
+	 * @returns the experiments after the adjustment for mass credit
+	 */
+	public static List<Experiment> getExperimentsWithMassCredit()	{
+		return experimentsWithMassCredit;
+	}
 	
-//	static Payload greedy(Comparator<Experiment> order, Comparator<Payload> order2, int maxWeight, List<Experiment> experiments) {
+	/**
+	 * 
+	 * @param order
+	 * @param maxWeight
+	 * @param experiments
+	 * @returns a payload assembled greedily (depth 1) based on the parameters.
+	 */
 	static Payload greedy(Comparator<Experiment> order, int maxWeight, List<Experiment> experiments) {
 		List<Experiment> sorted = new ArrayList<>(experiments);
-		sorted.sort(order);
+		sorted.sort(order); //our budget priority queue
+		// todo list style.
 		
 		Payload payload = new Payload();
 		payload.addConstraints(exclusiveConstraint1, combinedSavings1, savings1, preReqConstraint1);
@@ -81,9 +94,12 @@ public class Strategies {
 		{
 			Experiment e = sorted.get(i);
 			
+			// This is so we don't add items more than once.
 			if(payload.items.contains(e))
 				continue;
 			
+			// Redundancy for catching if there's an old version of the Yeast experiment
+			// after massCredit is applied.
 			if(massCreditApplied && e.equals(y))
 				continue;
 			
@@ -91,6 +107,9 @@ public class Strategies {
 			speculativePayload.add(e);
 			speculativePayload.interactionEffects(massCreditApplied);
 			
+			// This check is for handling mass credit
+			// if we stumble into adding the Yeast experiment
+			// followed by Seed viabilty experiment.
 			if(speculativePayload.massCredit)
 			{
 				Payload sPWithMassCredit = new Payload();
@@ -102,9 +121,10 @@ public class Strategies {
 					else
 					{
 						sPWithMassCredit.add(y2);
+						// Normally we would set
 						//massCreditApplied = true;
-						//We don't do this because this payload is speculative
-						//if the experiment is added below, then we do this
+						// We don't do this because this payload is speculative
+						// Iff the experiment is added below, then we do this
 					}
 				}
 				sPWithMassCredit.checkPayloadValidity();
@@ -113,13 +133,21 @@ public class Strategies {
 			
 			if (speculativePayload.totalWeight <= maxWeight && speculativePayload.validPayload) {
 				payload.add(e);
+				i = -1; // In order to not miss options that were blocked by constraints
+				// We go back to before the beginning after adding an experiment
+				// Then at the end of the loop i is advanced to 0.
 				
 				if(payload.massCredit)
 					massCreditApplied = true;
-				
-				i = -1;
+				//this is that step we didn't do earlier when the payload was speculative
+
 				payload.interactionEffects(massCreditApplied);
 				
+				// This checks if we've applied the massCredit on this strategy.
+				// If we haven't, but we can get the mass credit
+				// because we have have the seed experiment
+				// then it applies the mass credit on the Yeast experiment.
+				// And updates the sorted order.
 				if(!massCreditApplied && combinedSavings1 != null && !combinedSavings1.isEmpty())
 				{
 					if(e.equals(combinedSavings1.getFirst()) && sorted.contains(y) && !payload.items.contains(y))
@@ -136,8 +164,14 @@ public class Strategies {
 		return payload;
 	}
 	
-	//comparingInt sorts ascending order, so for highest first it has to be reversed after
-		//thenComparing is for breaking ties using weight
+	/*
+	 * 
+	 * This uses greedy to get the highest rating first.
+	 * The comparator sorts by rating, then weight. 
+	 * 
+	 * comparingInt sorts ascending order, so for highest first it has to be reversed after
+	 * thenComparing is for breaking ties using weight
+	 */
 	static Payload highestRatingFirst(int maxWeight) {		
 		return greedy(
 				Comparator.comparingInt((Experiment e) -> e.rating).reversed().thenComparingInt(e -> e.weight),
@@ -145,6 +179,15 @@ public class Strategies {
 				experiments);
 	}
 	
+	/**
+	 * 
+	 * @param maxWeight
+	 * @returns a payload assembled greedily: lightest experiment first.
+	 * 
+	 * The comparator sorts by lightest, then rating. 
+	 * .reversed is used after sorting by rating
+	 * to get highest rating first for breaking ties 
+	 */
 	static Payload lightestFirst(int maxWeight) {
 		return greedy(
 				Comparator.comparingInt((Experiment e) -> e.weight).thenComparing(Comparator.comparingInt((Experiment e) -> e.rating).reversed()),
@@ -152,6 +195,12 @@ public class Strategies {
 				experiments);
 	}
 	
+	/**
+	 * 
+	 * @param maxWeight
+	 * @returns payload assembled greedily: highest ratio first.
+	 * The comparator sorts by ratio (descending order), then breaks ties with weight (ascending order).
+	 */
 	static Payload highestRatioFirst(int maxWeight) {
 		return greedy(
 				Comparator.comparingDouble(Experiment::ratio).reversed().thenComparingInt(e -> e.weight),
@@ -160,8 +209,9 @@ public class Strategies {
 	}
 	
 	/**
-	 * Searches all 2^n possible payloads and returns a list of all payloads the do
-	 * not exceed maxWeight
+	 * 
+	 * @param maxWeight
+	 * @returns a list of the 2^n possible payloads that are valid and within the maxWeight limit.
 	 */
 	static List<Payload> bruteForce(int maxWeight) {
 		int n = experiments.size();
@@ -206,6 +256,10 @@ public class Strategies {
 		return valid;
 	}
 	
+	/*
+	 * 
+	 * Prints the given payload.
+	 */
 	static void printPayload(Payload p) {
 		printDashes(45);
 		System.out.printf("%-25s %5s %8s%n%n", "Experiment", "Weight", "Rating");
@@ -216,6 +270,10 @@ public class Strategies {
 		System.out.printf("Total weight: %d%nTotal Rating: %d%n%n", p.totalWeight, p.totalRating);
 	}
 	
+	/*
+	 * 
+	 * Prints the top 3 items from the given list of payloads.
+	 */
 	static void printTopThree(List<Payload> payload) {
 		List<Payload> sorted = new ArrayList<>(payload);
 		sorted.sort(Comparator.comparingInt((Payload p) -> p.totalRating).reversed().thenComparingInt(p -> p.totalWeight));
@@ -226,6 +284,10 @@ public class Strategies {
 		}
 	}
 	
+	/*
+	 * 
+	 * Prints a line with a series of dashes of the given length.
+	 */
 	static void printDashes(int length) {
 		System.out.println("-".repeat(length));
 	}
